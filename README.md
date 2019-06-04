@@ -96,3 +96,4 @@ Visual Studio Codeを元にPythonのコーディング環境を構築してい�
 - Python
 - Python For VSCode
 - Python Extension Pack
+rrr
