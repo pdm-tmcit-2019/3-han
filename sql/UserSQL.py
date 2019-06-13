@@ -1,4 +1,7 @@
 import sqlite3
+import sys
+sys.path.append('..\model')
+import User
 
 class UserSQL:
     def __init__(self):
@@ -19,26 +22,29 @@ class UserSQL:
         insert_sql = 'INSERT INTO users(player_name, job_id) VALUES("{}", {});'.format(player_name, job_id)
         self.c.execute(insert_sql)
 
-    def find_add(self):
+    def find_all(self):
         find_sql = 'SELECT * FROM users'
-        self.c.execute(find_sql)
-        res = self.c.fetchall()
+        res = []
+        for row in self.c.execute(find_sql):
+            res.append(User.User(row["player_name"], row["job_id"]))
         return res
 
     def finf_by_id(self, id):
         find_sql = 'SELECT * FROM users WHERE id = {}'.format(id)
         self.c.execute(find_sql)
         res = self.c.fetchone()
-        return res
+        return User.User(res["player_name"], res["job_id"])
 
     def find_by_player_name(self, player_name):
-        find_sql = 'SELECT * FROM users WHERE player_name = {}'.format(player_name)
-        self.c.execute(find_sql)
-        res = self.c.fetchall()
+        find_sql = 'SELECT * FROM users WHERE player_name = "{}"'.format(player_name)
+        res = []
+        for row in self.c.execute(find_sql):
+            res.append(User.User(row["player_name"], row["job_id"]))
         return res
 
     def find_by_job_id(self, job_id):
         find_sql = 'SELECT * FROM users WHERE job_id = {}'.format(job_id)
-        self.c.execute(find_sql)
-        res = self.c.fetchall()
+        res = []
+        for row in self.c.execute(find_sql):
+            res.append(User.User(row["player_name"], row["job_id"]))
         return res
