@@ -29,7 +29,7 @@ class UserSQL:
             res.append(User.User(row["player_name"], row["job_id"]))
         return res
 
-    def finf_by_id(self, id):
+    def find_by_id(self, id):
         find_sql = 'SELECT * FROM users WHERE id = {}'.format(id)
         self.c.execute(find_sql)
         res = self.c.fetchone()
