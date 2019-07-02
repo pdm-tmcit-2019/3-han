@@ -1,6 +1,6 @@
 # git
 ## ブランチ名
-feature/{Torelloの識別URL}
+feature/{ブランチを切った人の名前}/{Torelloの識別URL}
 ## プルリクについて
 - プルリク名は対応したチケット名
 - プルリクの詳細にチケットのURLを貼る
