@@ -5,10 +5,6 @@ class Morpheme:
 	part_of_speech = ""
 	# 品詞の詳細1
 	part_of_speech_detail1 = ""
-	# 品詞の詳細2
-	part_of_speech_detail2 = ""
-	# 品詞の詳細3
-	part_of_speech_detail3 = ""
 	# 活用形
 	conjugation_type = ""
 	# 活用型
@@ -25,8 +21,6 @@ class Morpheme:
 		word, 
 		part_of_speech, 
 		part_of_speech_detail1, 
-		part_of_speech_detail2, 
-		part_of_speech_detail3, 
 		conjugation_type,
 		conjugation_model,
 		origin_word,
@@ -35,8 +29,6 @@ class Morpheme:
 		self.word = word
 		self.part_of_speech = part_of_speech
 		self.part_of_speech_detail1 = part_of_speech_detail1
-		self.part_of_speech_detail2 = part_of_speech_detail2
-		self.part_of_speech_detail3 = part_of_speech_detail3
 		self.conjugation_type = conjugation_type
 		self.conjugation_model = conjugation_model
 		self.origin_word = origin_word

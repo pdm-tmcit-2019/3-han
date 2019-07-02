@@ -16,7 +16,9 @@ class MorphologicalAnalysis:
 		result_list = result.split("\n")
 		for a_result in result_list:
 			splited_result = a_result.replace("\t", ",").split(",")
-			morpheme = Morpheme (
+			if (splited_result[0] == 'EOS'):
+				break
+			morpheme = Morpheme.Morpheme(
 				splited_result[0],
 				splited_result[1],
 				splited_result[2],
@@ -24,12 +26,7 @@ class MorphologicalAnalysis:
 				splited_result[4],
 				splited_result[5],
 				splited_result[6],
-				splited_result[7],
-				splited_result[8],
-				splited_result[9],
+				splited_result[7]
 			)
 			morpheme_list.append(morpheme)
 		return morpheme_list
-
-test = MorphologicalAnalysis("hello world")
-print(test.analysis())
