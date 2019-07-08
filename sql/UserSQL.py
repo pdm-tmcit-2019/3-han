@@ -19,7 +19,7 @@ class UserSQL:
         self.conn.close()
     
     def insert(self, player_name, job_id):
-        insert_sql = 'INSERT INTO users(player_name, job_id) VALUES("{}", {});'.format(player_name, job_id)
+        insert_sql = 'INSERT INTO users(player_name, job_id) SELECT * FROM (SELECT "{0}", {1}) AS TMP WHERE NOT EXISTS(SELECT * FROM users WHERE player_name = "{0}");'.format(player_name, job_id)
         self.c.execute(insert_sql)
 
     def find_all(self):
@@ -29,7 +29,7 @@ class UserSQL:
             res.append(User.User(row["player_name"], row["job_id"]))
         return res
 
-    def finf_by_id(self, id):
+    def find_by_id(self, id):
         find_sql = 'SELECT * FROM users WHERE id = {}'.format(id)
         self.c.execute(find_sql)
         res = self.c.fetchone()
