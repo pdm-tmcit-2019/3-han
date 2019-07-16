@@ -22,7 +22,7 @@ class UserSQL:
         self.conn.close()
     
     def insert(self, player_name, job_id):
-        insert_sql = 'INSERT INTO users(player_name, job_id) VALUES("{}", {});'.format(player_name, job_id)
+        insert_sql = 'INSERT INTO users(player_name, job_id) SELECT * FROM (SELECT "{0}", {1}) AS TMP WHERE NOT EXISTS(SELECT * FROM users WHERE player_name = "{0}");'.format(player_name, job_id)
         self.c.execute(insert_sql)
 
     def find_all(self):
