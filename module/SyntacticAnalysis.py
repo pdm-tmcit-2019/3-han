@@ -3,6 +3,7 @@ import CaboCha
 
 testSentence = "COします"
 
+
 class SyntacsAnalysis:
     sentence = ""
     cabocha = CaboCha.Parser("-u /mnt/c/Users/machibito2/Dropbox/school/5-grade/jinrou/3-han/user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
@@ -12,6 +13,7 @@ class SyntacsAnalysis:
         self.sentence = sentence
 
     def syntacsAnalysis(self):
+        result = []
         tree =  self.cabocha.parse(self.sentence)
         chunkId = 0
         for i in range(0, tree.size()):
@@ -19,8 +21,8 @@ class SyntacsAnalysis:
             if token.chunk != None:
                 print(chunkId, token.chunk.link, token.chunk.head_pos,token.chunk.func_pos, token.chunk.score)
                 chunkId += 1
-
-            print(token.surface, token.feature, token.ne)
+            result.append([token.surface, token.feature, token.ne])
+        return result
 
 hello = SyntacsAnalysis(testSentence)
-hello.syntacsAnalysis()
+print(hello.syntacsAnalysis())
