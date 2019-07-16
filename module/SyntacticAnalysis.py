@@ -19,7 +19,7 @@ class SyntacsAnalysis:
         for i in range(0, tree.size()):
             token = tree.token(i)
             if token.chunk != None:
-                print(chunkId, token.chunk.link, token.chunk.head_pos,token.chunk.func_pos, token.chunk.score)
+                result.append([chunkId, token.chunk.link, token.chunk.head_pos,token.chunk.func_pos, token.chunk.score])
                 chunkId += 1
             result.append([token.surface, token.feature, token.ne])
         return result
