@@ -3,7 +3,6 @@ import CaboCha
 
 testSentence = "COします"
 
-
 class SyntacsAnalysis:
     sentence = ""
     cabocha = CaboCha.Parser("-u /mnt/c/Users/machibito2/Dropbox/school/5-grade/jinrou/3-han/user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
