@@ -1,7 +1,10 @@
 import sqlite3
 import sys
-sys.path.append('..\model')
-import User
+import os
+# sys.path.append('../model')
+# import User
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from model import User
 
 class UserSQL:
     def __init__(self):

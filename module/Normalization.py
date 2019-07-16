@@ -2,30 +2,29 @@ import re
 import unicodedata
 import nltk
 
-sentence = ''
 pattern = 'co'
 replace = 'カミングアウト'
 
-def lower_text(text):
-	return text.lower()
+class Normalization:
+	sentence = ''
 
-def NormalizationFormCompatibilityComposition(text):
-	return unicodedata.normalize("NFKC", text)
+	def __init__(self, sentence):
+		super(Normalization, self).__init__()
+		self.sentence = sentence
 
-def ReplacingSlang(text):
-	token = []
-	token = nltk.word_tokenize(text)
+	def lower_text(self):
+		return self.sentence.lower()
 
-	for i in len(token):
-		if token[i] == 'co':
-			result += token.replace(pattern, replace)
-		else:
-			result += token[i]
-	return result
+	def NormalizationFormCompatibilityComposition(self):
+		return unicodedata.normalize("NFKC", self.sentence)
 
-def almost_main(text):
-	lower_text(text)
-	NormalizationFormCompatibilityComposition(text)
-	ReplacingSlang(text)
+	def ReplacingSlang(self):
+		token = []
+		token = nltk.word_tokenize(self.sentence)
 
-almost_main(sentence)
+		for i in len(token):
+			if token[i] == 'co':
+				result += token.replace(pattern, replace)
+			else:
+				result += token[i]
+		return result
