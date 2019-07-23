@@ -1,7 +1,8 @@
 import sqlite3
 import sys
-sys.path.append('..\model')
-import IntStatusUpdate
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from model import IntStatusUpdate
 
 class IntStatusUpdateSQL:
 	def __init__(self):
@@ -12,8 +13,8 @@ class IntStatusUpdateSQL:
 			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 			player_name VARCHAR(30) NOT NULL,
 			job_id INTEGER NOT NULL,
-			talk_status INTEGER NOT NULL,
-			realtime_id INTEGER NOT NULL
+			talk_status_id INTEGER NOT NULL,
+			trust_potential INTEGER NOT NULL
 			)''')
 		self.c.execute('''CREATE TABLE IF NOT EXISTS int_status_update_head(
 			head INTEGER NOT NULL DEFAULT 1
@@ -39,8 +40,8 @@ class IntStatusUpdateSQL:
 		res = self.c.fetchone()
 		return res["head"]
 
-	def insert(self, player_name, job_id, talk_status, realtime_id):
-		insert_sql = 'INSERT INTO int_status_update(player_name, job_id, talk_status, realtime_id) VALUES("{}", {}, {}, {});'.format(player_name, job_id, talk_status, realtime_id)
+	def insert(self, player_name, job_id, talk_status_id, trust_potential):
+		insert_sql = 'INSERT INTO int_status_update(player_name, job_id, talk_status_id, trust_potential) VALUES("{}", {}, {}, {});'.format(player_name, job_id, talk_status_id, trust_potential)
 		self.c.execute(insert_sql)
 
 	def find(self, head):
@@ -49,5 +50,5 @@ class IntStatusUpdateSQL:
 		row = self.c.fetchone()
 		res = None
 		if row is not None:
-			res = IntStatusUpdate.IntStatusUpdate(row["id"], row["player_name"], row["job_id"], row["talk_status"], row["realtime_id"])
+			res = IntStatusUpdate.IntStatusUpdate(row["id"], row["player_name"], row["job_id"], row["talk_status_id"], row["trust_potential"])
 		return res

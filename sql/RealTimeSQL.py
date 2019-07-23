@@ -1,7 +1,8 @@
 import sqlite3
 import sys
-sys.path.append('..\model')
-import RealTime
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from model import RealTime
 
 class RealTimeSQL:
 	def __init__(self):
@@ -12,14 +13,23 @@ class RealTimeSQL:
 			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 			talk_status_id INTEGER NOT NULL
 			)''')
+		self.c.execute('''INSERT INTO realtime(talk_status_id) 
+			SELECT * FROM (SELECT 0) AS TMP 
+			WHERE NOT EXISTS (SELECT * FROM realtime);''')
 
 	def __del__(self):
 		self.conn.commit()
 		self.conn.close()
 
-	def insert(self, talk_status_id):
-		insert_sql = 'INSERT INTO realtime(talk_status_id) VALUES({});'.format(talk_status_id)
-		self.c.execute(insert_sql)
+	def update(self, talk_status_id):
+		update_sql = 'UPDATE realtime SET talk_status_id = {};'.format(talk_status_id)
+		self.c.execute(update_sql)
+
+	def find(self):
+		find_sql = 'SELECT * FROM realtime'
+		self.c.execute(find_sql)
+		res = self.c.fetchone()
+		return RealTime.RealTime(res["talk_status_id"])
 
 	def find_all(self):
 		find_sql = 'SELECT * FROM realtime'
@@ -27,9 +37,3 @@ class RealTimeSQL:
 		for row in self.c.execute(find_sql):
 			res.append(RealTime.RealTime(row["talk_status_id"]))
 		return res
-
-	def find_by_id(self, id):
-		find_sql = 'SELECT * FROM realtime WHERE id = {}'.format(id)
-		self.c.execute(find_sql)
-		res = self.c.fetchone()
-		return RealTime.RealTime(res["talk_status_id"])
