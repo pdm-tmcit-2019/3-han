@@ -1,7 +1,10 @@
 import sys
 import CaboCha
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from model import Clauses
 
-testSentence = "COします"
+testSentence = "わたしが占い師だとCOします"
 
 
 class SyntacsAnalysis:
@@ -14,14 +17,30 @@ class SyntacsAnalysis:
 
     def syntacsAnalysis(self):
         result = []
-        tree =  self.cabocha.parse(self.sentence)
+        tmpStr = ""
+        tmpChunkID = ""
+        tmpChunkLink = ""
+        tmpChunkScore = ""
+        tree = self.cabocha.parse(self.sentence)
         chunkId = 0
         for i in range(0, tree.size()):
             token = tree.token(i)
             if token.chunk != None:
-                result.append([chunkId, token.chunk.link, token.chunk.head_pos,token.chunk.func_pos, token.chunk.score])
+                if tmpStr != "":
+                    # print(tmpStr)
+                    clauses = Clauses.Clauses(tmpStr, tmpChunkID, tmpChunkLink, tmpChunkScore)
+                    result.append(clauses)
+                    tmpStr = ""
+                # print(chunkId, token.chunk.link, token.chunk.score)
+                tmpChunkID = chunkId
+                tmpChunkLink = token.chunk.link
+                tmpChunkScore = token.chunk.score
                 chunkId += 1
-            result.append([token.surface, token.feature, token.ne])
+            tmpStr += token.surface
+            # print(token.surface)
+        clauses = Clauses.Clauses(tmpStr, tmpChunkID, tmpChunkLink, tmpChunkScore)
+        result.append(clauses)
+        # print(tmpStr)
         return result
 
 hello = SyntacsAnalysis(testSentence)
