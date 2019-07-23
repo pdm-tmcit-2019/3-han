@@ -1,6 +1,7 @@
 from module import Input
 from module import MorphologicalAnalysis
 from module import Normalization
+from module import SyntacticAnalysis
 import io,sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -24,14 +25,17 @@ while True:
 
     # 文字列の正規化
     # normalization = Normalization.Normalization()
-    # まだ正規化が使えないので飛ばす
+    # まだ正規化が使えないので飛ばす(とりあえず元の文章)
     tmpSentence = ""
     for nowWord in aftereMorphologicalAnalysisSentence:
         tmpSentence += nowWord.word
 
     # 構文解析
-    print(tmpSentence)
+    syntacsAnalysis = SyntacticAnalysis.SyntacsAnalysis(tmpSentence)
+    afterSyntacsAnalysis = syntacsAnalysis.syntacsAnalysis()
 
+    for now in afterSyntacsAnalysis:
+        print(now)
 
 
     # print(nowDay, talkPlayerName, aftereMorphologicalAnalysisSentence)
