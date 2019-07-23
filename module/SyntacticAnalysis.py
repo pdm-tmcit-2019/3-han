@@ -4,12 +4,12 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from model import Clauses
 
-testSentence = "わたしが占い師だとCOします"
+testSentence = "CO"
 
 
 class SyntacsAnalysis:
     sentence = ""
-    cabocha = CaboCha.Parser("-u /mnt/c/Users/machibito2/Dropbox/school/5-grade/jinrou/3-han/user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
+    cabocha = CaboCha.Parser("-u ../user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
     # -u (ユーザー辞書の絶対パス) -d (ipadicとかのあるディレクトリの絶対パス(いるのであれば)(あると強そう))
 
     def __init__(self, sentence):
@@ -44,4 +44,7 @@ class SyntacsAnalysis:
         return result
 
 hello = SyntacsAnalysis(testSentence)
-print(hello.syntacsAnalysis())
+# print(hello.syntacsAnalysis())
+res = hello.syntacsAnalysis()
+for resu in res:
+    print(resu.clause, resu.myID, resu.toID, resu.score)
