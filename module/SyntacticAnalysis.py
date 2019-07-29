@@ -9,7 +9,7 @@ testSentence = "CO"
 
 class SyntacsAnalysis:
     sentence = ""
-    cabocha = CaboCha.Parser("-u ../user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
+    cabocha = CaboCha.Parser()#("-u /mnt/c/Users/machibito2/Dropbox/school/5-grade/jinrou/3-han/user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
     # -u (ユーザー辞書の絶対パス) -d (ipadicとかのあるディレクトリの絶対パス(いるのであれば)(あると強そう))
 
     def __init__(self, sentence):
