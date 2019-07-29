@@ -2,6 +2,7 @@ from module import Input
 from module import MorphologicalAnalysis
 from module import Normalization
 from module import SyntacticAnalysis
+from module import Output
 import io,sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -37,9 +38,18 @@ while True:
     for now in afterSyntacsAnalysis:
         print(now)
 
+    # 意味抽出
 
-    # print(nowDay, talkPlayerName, aftereMorphologicalAnalysisSentence)
+
+    # 状態の更新
+
+
+
 
     # 次のログへ
     break
     input.next()
+
+# 出力
+output = Output.Output()
+output.csvOutput('./village_g10.csv', 'Hello')
