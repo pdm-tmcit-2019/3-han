@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from model import Clauses
 
-testSentence = "わたしが占い師だとCOします"
+testSentence = "CO"
 
 
 class SyntacsAnalysis:
@@ -44,4 +44,7 @@ class SyntacsAnalysis:
         return result
 
 hello = SyntacsAnalysis(testSentence)
-print(hello.syntacsAnalysis())
+# print(hello.syntacsAnalysis())
+res = hello.syntacsAnalysis()
+for resu in res:
+    print(resu.clause, resu.myID, resu.toID, resu.score)
