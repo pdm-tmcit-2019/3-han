@@ -3,16 +3,21 @@
 import re
 import unicodedata
 import nltk
+from model import Morpheme
 
 pattern = 'co'
 replace = 'カミングアウト'
 
 class Normalization:
 	sentence = ''
-
-	def __init__(self, sentence):
+	morpheme_list
+	def __init__(self, morpheme_list):
 		super(Normalization, self).__init__()
-		self.sentence = sentence
+		self.morpheme_list = morpheme_list
+
+		for morpheme in morpheme_list:
+        	self.sentence += morpheme.word
+        return self.sentence
 
 	def lower_text(self):
 		return self.sentence.lower()
