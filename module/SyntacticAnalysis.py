@@ -4,8 +4,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from model import Clauses
 
-testSentence = "真～っ直ぐな～字っ♪　　　　曲が～った字～♪ちっ、歌ってたら突っ込むの遅れちゃったわ。残念ね。カタリナ、あなたは誰なの！？って言おうと思ってたのに。どうでもいいことだけど、さっきの非COはペーターの占い師CO見て「と思ってたけど」ってことね。オットー、確白の人がいるならまとめ役困らないわよね。でも、続けて貰って指定した先の占いや霊判定で黒が出ると真偽判断材料は増えると思ってたわ。"
-
+testSentence = "太郎は花子が読んでいる本を次郎に渡した"
 
 class SyntacsAnalysis:
     sentence = ""
@@ -37,7 +36,7 @@ class SyntacsAnalysis:
                 tmpChunkLink = token.chunk.link
                 tmpChunkScore = token.chunk.score
                 chunkId += 1
-            print(token.surface, token.feature)
+            # print(token.surface, token.feature)
             tmpStr += token.surface
             # print(token.surface)
         clauses = Clauses.Clauses(tmpStr, tmpChunkID, tmpChunkLink, tmpChunkScore)
@@ -48,5 +47,9 @@ class SyntacsAnalysis:
 hello = SyntacsAnalysis(testSentence)
 # print(hello.syntacsAnalysis())
 res = hello.syntacsAnalysis()
+
+# check
+for i in range(len(res)):
+    print(res[i].clause, res[res[i].toID].clause)
 for resu in res:
     print(resu.clause, resu.myID, resu.toID, resu.score)
