@@ -7,8 +7,13 @@ import io,sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+if len(sys.argv) != 2:
+    print("Error: input filePath arg")
+    sys.exit(1)
+
+argFilePath = sys.argv[1]
 input = Input.Input()
-input.setCsvFile('./village_g10.csv')
+input.setCsvFile(argFilePath)
 
 while True:
     # CSV読み込み
@@ -52,4 +57,4 @@ while True:
 
 # 出力
 output = Output.Output()
-output.csvOutput('./village_g10.csv', 'Hello')
+output.csvOutput(argFilePath, 'Hello')
