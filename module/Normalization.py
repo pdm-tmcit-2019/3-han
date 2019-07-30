@@ -19,15 +19,11 @@ class Normalization:
         	self.sentence += morpheme.word
         return self.sentence
 
-	def lower_text(self):
-		return self.sentence.lower()
-
 	def NormalizationFormCompatibilityComposition(self):
-		return unicodedata.normalize("NFKC", self.sentence)
-
-	def ReplacingSlang(self):
 		token = []
-		token = nltk.word_tokenize(self.sentence)
+		s = self.sentence.lower()
+		s = unicodedata.normalize("NFKC", s)
+		token = nltk.word_tokenize(s)
 
 		for i in len(token):
 			if token[i] == 'co':
