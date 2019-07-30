@@ -1,3 +1,5 @@
+# coding: utf8
+
 class IntStatusUpdate:
 	id = None
 	player_name = None

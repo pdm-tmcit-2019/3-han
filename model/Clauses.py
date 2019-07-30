@@ -1,3 +1,5 @@
+# coding: utf8
+
 class Clauses:
 	# 自分の文節ID
 	myID = ""

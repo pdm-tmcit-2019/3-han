@@ -1,3 +1,5 @@
+# coding: utf8
+
 class Players:
     id = None
     name = None

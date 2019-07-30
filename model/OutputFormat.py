@@ -15,7 +15,7 @@ class OutputFormat:
 
 	@staticmethod
 	def COMMING_OUT_WEREWOLF():
-		return "はい、私は村人です"
+		return "いいえ、私は村人です"
 	
 # ex3
 

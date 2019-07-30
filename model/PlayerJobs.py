@@ -1,3 +1,5 @@
+# coding: utf8
+
 class PlayerJobs:
 	player_id = None
 	job_id = None
