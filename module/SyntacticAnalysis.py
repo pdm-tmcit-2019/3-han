@@ -8,7 +8,7 @@ testSentence = "太郎は花子が読んでいる本を次郎に渡した"
 
 class SyntacsAnalysis:
     sentence = ""
-    cabocha = CaboCha.Parser("-u ../user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
+    cabocha = CaboCha.Parser() #("-u ../user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
     # -u (ユーザー辞書の相対パス) -d (ipadicとかのあるディレクトリの絶対パス(いるのであれば)(あると強そう))
 
     def __init__(self, sentence):
@@ -44,12 +44,12 @@ class SyntacsAnalysis:
         # print(tmpStr)
         return result
 
-hello = SyntacsAnalysis(testSentence)
+# hello = SyntacsAnalysis(testSentence)
 # print(hello.syntacsAnalysis())
-res = hello.syntacsAnalysis()
+# res = hello.syntacsAnalysis()
 
 # check
-for i in range(len(res)):
-    print(res[i].clause, res[res[i].toID].clause)
-for resu in res:
-    print(resu.clause, resu.myID, resu.toID, resu.score)
+# for i in range(len(res)):
+#     print(res[i].clause, res[res[i].toID].clause)
+# for resu in res:
+#     print(resu.clause, resu.myID, resu.toID, resu.score)

@@ -3,6 +3,7 @@ from module import MorphologicalAnalysis
 from module import Normalization
 from module import SyntacticAnalysis
 from module import Output
+from model import OutputFormat
 import io,sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -40,9 +41,6 @@ while True:
     syntacsAnalysis = SyntacticAnalysis.SyntacsAnalysis(tmpSentence)
     afterSyntacsAnalysis = syntacsAnalysis.syntacsAnalysis()
 
-    for now in afterSyntacsAnalysis:
-        print(now)
-
     # 意味抽出
 
 
@@ -55,6 +53,6 @@ while True:
     break
     input.next()
 
-# 出力
+# 出力(「はい、私は村人です」固定)
 output = Output.Output()
-output.csvOutput(argFilePath, 'Hello')
+output.csvOutput(argFilePath, OutputFormat.OutputFormat.COMMING_OUT_VILLAGER())
