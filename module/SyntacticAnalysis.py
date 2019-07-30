@@ -4,13 +4,12 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from model import Clauses
 
-testSentence = "CO"
-
+testSentence = "太郎は花子が読んでいる本を次郎に渡した"
 
 class SyntacsAnalysis:
     sentence = ""
-    cabocha = CaboCha.Parser()#("-u /mnt/c/Users/machibito2/Dropbox/school/5-grade/jinrou/3-han/user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
-    # -u (ユーザー辞書の絶対パス) -d (ipadicとかのあるディレクトリの絶対パス(いるのであれば)(あると強そう))
+    cabocha = CaboCha.Parser("-u ../user.dic -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd")
+    # -u (ユーザー辞書の相対パス) -d (ipadicとかのあるディレクトリの絶対パス(いるのであれば)(あると強そう))
 
     def __init__(self, sentence):
         self.sentence = sentence
@@ -29,6 +28,7 @@ class SyntacsAnalysis:
                 if tmpStr != "":
                     # print(tmpStr)
                     clauses = Clauses.Clauses(tmpStr, tmpChunkID, tmpChunkLink, tmpChunkScore)
+                    # result.append([chunkId, token.chunk.link, token.chunk.head_pos,token.chunk.func_pos, token.chunk.score])
                     result.append(clauses)
                     tmpStr = ""
                 # print(chunkId, token.chunk.link, token.chunk.score)
@@ -36,6 +36,7 @@ class SyntacsAnalysis:
                 tmpChunkLink = token.chunk.link
                 tmpChunkScore = token.chunk.score
                 chunkId += 1
+            # print(token.surface, token.feature)
             tmpStr += token.surface
             # print(token.surface)
         clauses = Clauses.Clauses(tmpStr, tmpChunkID, tmpChunkLink, tmpChunkScore)
@@ -46,5 +47,9 @@ class SyntacsAnalysis:
 hello = SyntacsAnalysis(testSentence)
 # print(hello.syntacsAnalysis())
 res = hello.syntacsAnalysis()
+
+# check
+for i in range(len(res)):
+    print(res[i].clause, res[res[i].toID].clause)
 for resu in res:
     print(resu.clause, resu.myID, resu.toID, resu.score)
