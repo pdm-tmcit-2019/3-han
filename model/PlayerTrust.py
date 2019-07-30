@@ -1,3 +1,5 @@
+# coding: utf8
+
 class PlayerTrust:
 	player_id = None
 	trust_potential = None

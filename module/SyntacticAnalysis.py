@@ -1,3 +1,5 @@
+# coding: utf8
+
 import sys
 import CaboCha
 import os
@@ -49,7 +51,7 @@ class SyntacsAnalysis:
 # res = hello.syntacsAnalysis()
 
 # check
-# for i in range(len(res)):
-#     print(res[i].clause, res[res[i].toID].clause)
-# for resu in res:
-#     print(resu.clause, resu.myID, resu.toID, resu.score)
+for i in range(len(res)):
+    print(res[i].clause, res[res[i].toID].clause)
+for resu in res:
+    print(resu.clause, resu.myID, resu.toID, resu.score)

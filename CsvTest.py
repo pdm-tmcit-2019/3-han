@@ -1,3 +1,5 @@
+# coding: utf8
+
 from module import Input
 from module import MorphologicalAnalysis
 from module import Normalization

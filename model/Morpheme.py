@@ -1,3 +1,5 @@
+# coding: utf8
+
 class Morpheme:
 	# 元の単語
 	word = ""
