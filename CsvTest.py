@@ -6,7 +6,10 @@ from module import Normalization
 from module import SyntacticAnalysis
 from module import Output
 from model import OutputFormat
-import io,sys
+import numpy as np
+import io,sys,nltk
+
+nltk.download('punkt')
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -29,18 +32,19 @@ while True:
         break
 
     # 形態素解析
+    if type(talkSentence) is float and np.isnan(talkSentence):
+        break
+
     morphologicalAnalysis = MorphologicalAnalysis.MorphologicalAnalysis(talkSentence)
-    aftereMorphologicalAnalysisSentence = morphologicalAnalysis.analysis()
+    aftereMorphologicalAnalysis = morphologicalAnalysis.analysis()
 
     # 文字列の正規化
-    # normalization = Normalization.Normalization()
-    # まだ正規化が使えないので飛ばす(とりあえず元の文章)
-    tmpSentence = ""
-    for nowWord in aftereMorphologicalAnalysisSentence:
-        tmpSentence += nowWord.word
+    normalization = Normalization.Normalization(aftereMorphologicalAnalysis)
+    afterNormalization = normalization.NormalizationFormCompatibilityComposition()
+    print(afterNormalization)
 
     # 構文解析
-    syntacsAnalysis = SyntacticAnalysis.SyntacsAnalysis(tmpSentence)
+    syntacsAnalysis = SyntacticAnalysis.SyntacsAnalysis(afterNormalization)
     afterSyntacsAnalysis = syntacsAnalysis.syntacsAnalysis()
 
     # 意味抽出
@@ -52,7 +56,6 @@ while True:
 
 
     # 次のログへ
-    break
     input.next()
 
 # 出力(「はい、私は村人です」固定)
