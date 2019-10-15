@@ -7,14 +7,15 @@ class Server {
         this.http = require('http');
         this.io = require('socket.io');
         this.fs = require('fs');
+        this.path = require('path');
     }
     start() {
         const app = this.express();
         const server = this.http.Server(app);
-        app.use(this.express.static('public'));
+        app.use(this.express.static(this.path.join(__dirname, '/../public')));
         app.get('/', (req, res, next) => {
             console.log(`get`);
-            var data = this.fs.readFileSync("public/index.htm");
+            var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'));
             res.writeHead(200, {
                 'Content-Type': 'charset=utf-8',
                 'Cache-Control': 'no-cache'
