@@ -6,15 +6,20 @@ class Server {
         this.express = require('express');
         this.http = require('http');
         this.io = require('socket.io');
+        this.fs = require('fs');
+        this.path = require('path');
     }
     start() {
         const app = this.express();
         const server = this.http.Server(app);
+        app.use(this.express.static(this.path.join(__dirname, '/../public')));
         app.get('/', (req, res, next) => {
-            res.send('hello world');
+            console.log(`get`);
+            var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'));
+            res.end(data);
         });
         server.listen(this.PORT, () => {
-            console.log(`server staerted. PORT:${this.PORT}`);
+            console.log(`server started. PORT:${this.PORT}`);
             console.log(`http://localhost:${this.PORT}`);
         });
     }
