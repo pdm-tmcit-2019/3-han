@@ -16,10 +16,6 @@ class Server {
         app.get('/', (req, res, next) => {
             console.log(`get`);
             var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'));
-            res.writeHead(200, {
-                'Content-Type': 'charset=utf-8',
-                'Cache-Control': 'no-cache'
-            });
             res.end(data);
         });
         server.listen(this.PORT, () => {
