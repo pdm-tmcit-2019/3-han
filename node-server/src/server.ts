@@ -16,7 +16,7 @@ class Server {
 		const server = this.http.Server(app)
 		app.use(this.express.static(this.path.join(__dirname, '/../public')))
 
-		app.get('/', (req: Request, res: Response, next: NextFunction) => {
+		app.get('/test', (req: Request, res: Response, next: NextFunction) => {
 			var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'))
 			res.end(data)
 		})
