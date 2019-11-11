@@ -12,4 +12,4 @@ class Village:
 		self.name = name
 		self.totalNumberOfCharacters = totalNumberOfCharacters
 		self.lang = lang
-		self.chatSettings = charSettings
+		self.chatSettings = chatSettings
