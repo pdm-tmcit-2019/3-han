@@ -25,7 +25,8 @@ class Server {
         });
         wss.on('connection', (ws) => {
             ws.on('message', (message) => {
-                ws.send(message);
+                var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/flavorText.jsonld'));
+                ws.send(data.toString());
             });
             console.log('Connect WebSocket client.');
         });

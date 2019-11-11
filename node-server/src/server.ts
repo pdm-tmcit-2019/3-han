@@ -34,7 +34,8 @@ class Server {
 
 		wss.on('connection', (ws: WebSocket) => {
 			ws.on('message', (message: string) => {
-				ws.send(message)
+				var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/flavorText.jsonld'))
+				ws.send(data.toString())
 			})
 			console.log('Connect WebSocket client.')
 		})
