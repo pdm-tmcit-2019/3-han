@@ -1,9 +1,6 @@
 # coding: utf8
-#数値は0
-#文字列は空文字
-#配列は空配列
 
-class Morning:
+class Noon:
 	village = None
 	token = ""
 	phase = ""
@@ -15,13 +12,13 @@ class Morning:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	votingResultsSummary = []
-	votingResultsDetails = []
+	votingResultSummary = []
+	votingResultDetails = []
 	character = []
 	role = []
 
 	def __init__(
-		self,
+		self, 
 		village,
 		token,
 		phase,
@@ -33,22 +30,21 @@ class Morning:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		votingResultsSummary,
-		votingResultsDetails,
+		votingResultSummary,
+		votingResultDetails,
 		character,
-		role):
+		role ):
 		self.village = village
 		self.token = token
 		self.phase = phase
 		self.day = day
 		self.phaseTimeLimit = phaseTimeLimit
-		self.phaseStartTime = phaseStartTime
+		self.phaseStart = phaseStartTime
 		self.serverTimestamp = serverTimestamp
 		self.clientTimestamp = clientTimestamp
-		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.votingResultsSummary = votingResultsSummary
-		self.votingResultsDetails = votingResultsSummary
+		self.votingResultSummary = votingResultSummary
+		self.votingResultDetails = votingResultDetails
 		self.character = character
 		self.role = role
