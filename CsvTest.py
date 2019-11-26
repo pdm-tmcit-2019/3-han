@@ -50,8 +50,12 @@ while True:
 
     # 意味抽出
     meaningExtraction = MeaningExtraction.MeaningExtraction()
+    # coをチェック
     checkCoResult = meaningExtraction.checkCo(afterSyntacsAnalysis)
-    print(checkCoResult)
+    # print(checkCoResult)
+    # 自分への質問をチェック(役職)
+    checkQuestionToMe = meaningExtraction.checkQuestionToMe(afterSyntacsAnalysis, ["高専", "太郎"])
+    print(checkQuestionToMe)
 
     # 状態の更新
 
@@ -62,5 +66,5 @@ while True:
     input.next()
 
 # 出力(「はい、私は村人です」固定)
-output = Output.Output()
+output = OutPut.Output()
 output.csvOutput(argFilePath, OutputFormat.OutputFormat.COMMING_OUT_VILLAGER())
