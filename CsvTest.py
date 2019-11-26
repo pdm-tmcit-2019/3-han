@@ -4,7 +4,8 @@ from module import Input
 from module import MorphologicalAnalysis
 from module import Normalization
 from module import SyntacticAnalysis
-from module import Output
+from module import OutPut
+from module import MeaningExtraction
 from model import OutputFormat
 import numpy as np
 import io,sys,nltk
@@ -41,14 +42,16 @@ while True:
     # 文字列の正規化
     normalization = Normalization.Normalization(aftereMorphologicalAnalysis)
     afterNormalization = normalization.NormalizationFormCompatibilityComposition()
-    print(afterNormalization)
 
     # 構文解析
     syntacsAnalysis = SyntacticAnalysis.SyntacsAnalysis(afterNormalization)
     afterSyntacsAnalysis = syntacsAnalysis.syntacsAnalysis()
+    # print(afterSyntacsAnalysis[0].clause)
 
     # 意味抽出
-
+    meaningExtraction = MeaningExtraction.MeaningExtraction()
+    checkCoResult = meaningExtraction.checkCo(afterSyntacsAnalysis)
+    print(checkCoResult)
 
     # 状態の更新
 
