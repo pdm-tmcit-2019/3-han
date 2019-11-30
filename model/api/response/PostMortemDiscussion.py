@@ -1,10 +1,6 @@
 # coding: utf8
-# "None" is class method
-# "empty str" is str
-# "0" is int
-# "empty array" is array type
 
-class Morning:
+class PostMortemDiscussion:
 	village = None
 	token = ""
 	phase = ""

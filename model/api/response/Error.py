@@ -1,10 +1,6 @@
 # coding: utf8
-# "None" is class method
-# "empty str" is str
-# "0" is int
-# "empty array" is array type
 
-class Morning:
+class Error:
 	village = None
 	token = ""
 	phase = ""
@@ -16,10 +12,10 @@ class Morning:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	votingResultsSummary = []
-	votingResultsDetails = []
-	character = []
-	role = []
+	content = None
+	severity = ""
+	source = ""
+	isFromServer = 0
 
 	def __init__(
 		self,
@@ -34,10 +30,10 @@ class Morning:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		votingResultsSummary,
-		votingResultsDetails,
-		character,
-		role):
+		content,
+		severity,
+		source,
+		isFromServer):
 		self.village = village
 		self.token = token
 		self.phase = phase
@@ -49,7 +45,7 @@ class Morning:
 		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.votingResultsSummary = votingResultsSummary
-		self.votingResultsDetails = votingResultsSummary
-		self.character = character
-		self.role = role
+		self.content = content
+		self.severity = severity
+		self.source = source
+		self.isFromServer = isFromServer

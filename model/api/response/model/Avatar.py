@@ -10,6 +10,6 @@ class Avatar:
 		token,
 		name,
 		image ):
-			self.token = token,
+			self.token = token
 			self.name = name
 			self.image = image

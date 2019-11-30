@@ -1,10 +1,6 @@
 # coding: utf8
-# "None" is class method
-# "empty str" is str
-# "0" is int
-# "empty array" is array type
 
-class Morning:
+class AnonymousAudienceChat:
 	village = None
 	token = ""
 	phase = ""
@@ -16,10 +12,10 @@ class Morning:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	votingResultsSummary = []
-	votingResultsDetails = []
-	character = []
-	role = []
+	isMine = 0
+	text = None
+	maxLengthOfUnicodeCodePoints = 0
+	isFromServer = 0
 
 	def __init__(
 		self,
@@ -34,10 +30,10 @@ class Morning:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		votingResultsSummary,
-		votingResultsDetails,
-		character,
-		role):
+		isMine,
+		text,
+		maxLengthOfUnicodeCodePoints,
+		isFromServer):
 		self.village = village
 		self.token = token
 		self.phase = phase
@@ -49,7 +45,7 @@ class Morning:
 		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.votingResultsSummary = votingResultsSummary
-		self.votingResultsDetails = votingResultsSummary
-		self.character = character
-		self.role = role
+		self.isMine = isMine
+		self.text = text
+		self.maxLengthOfUnicodeCodePoints = maxLengthOfUnicodeCodePoints
+		self.isFromServer = isFromServer

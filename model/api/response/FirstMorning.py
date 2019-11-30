@@ -1,7 +1,8 @@
 # coding: utf8
-#数値は0
-#文字列は空文字
-#配列は空配列
+# "None" is class method
+# "empty str" is str
+# "0" is int
+# "empty array" is array type
 
 class FirstMorning:
 	village = None
