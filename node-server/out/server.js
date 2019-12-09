@@ -44,7 +44,8 @@ class Server {
                 wss.emit('chat message', message);
             });
             var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
-            PlayerSQL.playerTest(player);
+            PlayerSQL.initPlayers();
+            PlayerSQL.addPlayer(player);
             console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
