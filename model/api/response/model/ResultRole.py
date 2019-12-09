@@ -3,7 +3,7 @@
 class ResultRole:
 	isMine = ""
 	name = None
-	image = ""	
+	image = ""
 	numberOfPlayers = 0
 	character = []
 

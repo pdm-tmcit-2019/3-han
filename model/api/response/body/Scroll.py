@@ -1,6 +1,6 @@
 # coding: utf8
 
-class AnonymousAudienceChat:
+class Scroll:
 	village = None
 	token = ""
 	phase = ""
@@ -12,11 +12,11 @@ class AnonymousAudienceChat:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	avatar = None
-	isMine = 0
-	text = None
-	maxLengthOfUnicodeCodePoints = 0
-	isFromServer = 0
+	myCharacter = None
+	nodeId = ""
+	scrollTop = 0
+	scrollHeight = 0
+	offsetHeight = 0
 
 	def __init__(
 		self,
@@ -31,11 +31,11 @@ class AnonymousAudienceChat:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		avatar,
-		isMine,
-		text,
-		maxLengthOfUnicodeCodePoints,
-		isFromServer):
+		myCharacter,
+		nodeId,
+		scrollTop,
+		scrollHeight,
+		offsetHeight):
 		self.village = village
 		self.token = token
 		self.phase = phase
@@ -47,8 +47,8 @@ class AnonymousAudienceChat:
 		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.avatar = avatar
-		self.isMine = isMine
-		self.text = text
-		self.maxLengthOfUnicodeCodePoints = maxLengthOfUnicodeCodePoints
-		self.isFromServer = isFromServer
+		self.myCharacter = myCharacter
+		self.nodeId = nodeId
+		self.scrollTop = scrollTop
+		self.scrollHeight = scrollHeight
+		self.offsetHeight = offsetHeight

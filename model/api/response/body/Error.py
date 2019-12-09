@@ -1,6 +1,6 @@
 # coding: utf8
 
-class AnonymousAudienceChat:
+class Error:
 	village = None
 	token = ""
 	phase = ""
@@ -12,10 +12,10 @@ class AnonymousAudienceChat:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	avatar = None
-	isMine = 0
-	text = None
-	maxLengthOfUnicodeCodePoints = 0
+	myCharacter = None
+	content = None
+	severity = ""
+	source = ""
 	isFromServer = 0
 
 	def __init__(
@@ -31,10 +31,10 @@ class AnonymousAudienceChat:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		avatar,
-		isMine,
-		text,
-		maxLengthOfUnicodeCodePoints,
+		myCharacter,
+		content,
+		severity,
+		source,
 		isFromServer):
 		self.village = village
 		self.token = token
@@ -47,8 +47,8 @@ class AnonymousAudienceChat:
 		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.avatar = avatar
-		self.isMine = isMine
-		self.text = text
-		self.maxLengthOfUnicodeCodePoints = maxLengthOfUnicodeCodePoints
+		self.myCharacter = myCharacter
+		self.content = content
+		self.severity = severity
+		self.source = source
 		self.isFromServer = isFromServer

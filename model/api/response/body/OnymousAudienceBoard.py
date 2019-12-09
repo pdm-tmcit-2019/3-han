@@ -1,6 +1,6 @@
 # coding: utf8
 
-class AnonymousAudienceChat:
+class OnymousAudienceBoard:
 	village = None
 	token = ""
 	phase = ""
@@ -13,10 +13,9 @@ class AnonymousAudienceChat:
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
 	avatar = None
-	isMine = 0
-	text = None
-	maxLengthOfUnicodeCodePoints = 0
-	isFromServer = 0
+	character = None
+	role = None
+	prediction = ""
 
 	def __init__(
 		self,
@@ -32,10 +31,9 @@ class AnonymousAudienceChat:
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
 		avatar,
-		isMine,
-		text,
-		maxLengthOfUnicodeCodePoints,
-		isFromServer):
+		character,
+		role,
+		prediction):
 		self.village = village
 		self.token = token
 		self.phase = phase
@@ -48,7 +46,6 @@ class AnonymousAudienceChat:
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
 		self.avatar = avatar
-		self.isMine = isMine
-		self.text = text
-		self.maxLengthOfUnicodeCodePoints = maxLengthOfUnicodeCodePoints
-		self.isFromServer = isFromServer
+		self.character = character
+		self.role = role
+		self.prediction = prediction

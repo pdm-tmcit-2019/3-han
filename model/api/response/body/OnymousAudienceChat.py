@@ -1,6 +1,6 @@
 # coding: utf8
 
-class AnonymousAudienceChat:
+class OnymousAudienceChat:
 	village = None
 	token = ""
 	phase = ""

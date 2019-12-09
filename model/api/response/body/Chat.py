@@ -1,6 +1,6 @@
 # coding: utf8
 
-class AnonymousAudienceChat:
+class Chat:
 	village = None
 	token = ""
 	phase = ""
@@ -12,7 +12,8 @@ class AnonymousAudienceChat:
 	directionality = ""
 	intensionalDisclosureRange = ""
 	extensionalDisclosureRange = []
-	avatar = None
+	myCharacter = None
+	character = None
 	isMine = 0
 	text = None
 	maxLengthOfUnicodeCodePoints = 0
@@ -31,7 +32,8 @@ class AnonymousAudienceChat:
 		directionality,
 		intensionalDisclosureRange,
 		extensionalDisclosureRange,
-		avatar,
+		myCharacter,
+		character,
 		isMine,
 		text,
 		maxLengthOfUnicodeCodePoints,
@@ -47,7 +49,8 @@ class AnonymousAudienceChat:
 		self.directionality = directionality
 		self.intensionalDisclosureRange = intensionalDisclosureRange
 		self.extensionalDisclosureRange = extensionalDisclosureRange
-		self.avatar = avatar
+		self.myCharacter = myCharacter
+		self.character = character
 		self.isMine = isMine
 		self.text = text
 		self.maxLengthOfUnicodeCodePoints = maxLengthOfUnicodeCodePoints
