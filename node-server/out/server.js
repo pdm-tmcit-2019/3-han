@@ -1,5 +1,14 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const PlayerSQL = __importStar(require("./sql/PlayerSQL"));
+const Player_1 = require("./model/Player");
 class Server {
     constructor() {
         this.PORT = process.env.PORT || 8000;
@@ -25,8 +34,18 @@ class Server {
         });
         wss.on('connection', (ws) => {
             ws.on('message', (message) => {
-                ws.send(message);
+                // var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
+                // ws.send(data.toString())
+                var obj = JSON.parse(message);
+                var tmp = obj.phase;
+                console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`);
             });
+            ws.on('chat message', (message) => {
+                wss.emit('chat message', message);
+            });
+            var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
+            PlayerSQL.initPlayers();
+            PlayerSQL.addPlayer(player);
             console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
