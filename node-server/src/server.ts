@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express'
 import * as express from 'express'
 import * as http from 'http'
 import * as WebSocket from 'ws'
-import * as PlayerSQL from './sql/PlayerSQL'
+import {PlayerSQL} from './sql/PlayerSQL'
 import {Player} from './model/Player'
 
 class Server {
@@ -21,6 +21,7 @@ class Server {
 		const app = this.express()
 		const server = this.http.createServer(app)
 		const wss = new this.ws.Server({server})
+		const playerSQL = new PlayerSQL()
 
 		app.use(this.express.static(this.path.join(__dirname, '/../public')))
 
@@ -46,8 +47,7 @@ class Server {
 				wss.emit('chat message', message)
 			})
 			var player = new Player(0, "tsuyuzaki", 2, 1)
-			PlayerSQL.initPlayers()
-			PlayerSQL.addPlayer(player)
+			playerSQL.addPlayer(player)
 			console.log('Connect WebSocket client.')
 		})
 		

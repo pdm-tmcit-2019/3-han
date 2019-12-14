@@ -1,13 +1,6 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const PlayerSQL = __importStar(require("./sql/PlayerSQL"));
+const PlayerSQL_1 = require("./sql/PlayerSQL");
 const Player_1 = require("./model/Player");
 class Server {
     constructor() {
@@ -23,6 +16,7 @@ class Server {
         const app = this.express();
         const server = this.http.createServer(app);
         const wss = new this.ws.Server({ server });
+        const playerSQL = new PlayerSQL_1.PlayerSQL();
         app.use(this.express.static(this.path.join(__dirname, '/../public')));
         app.get('/', (req, res, next) => {
             var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'));
@@ -44,8 +38,7 @@ class Server {
                 wss.emit('chat message', message);
             });
             var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
-            PlayerSQL.initPlayers();
-            PlayerSQL.addPlayer(player);
+            playerSQL.addPlayer(player);
             console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
