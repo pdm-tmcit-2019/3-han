@@ -4,6 +4,7 @@ import * as http from 'http'
 import * as WebSocket from 'ws'
 import {PlayerSQL} from './sql/PlayerSQL'
 import {Player} from './model/Player'
+import {Connection} from './connection'
 
 class Server {
 	PORT = process.env.PORT || 8000
@@ -36,18 +37,15 @@ class Server {
 		})
 
 		wss.on('connection', (ws: WebSocket) => {
+			const connection = new Connection(ws)
 			ws.on('message', (message: string) => {
-				// var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
-				// ws.send(data.toString())
-				var obj = JSON.parse(message)
-				var tmp = obj.phase
-				console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
+				// var obj = JSON.parse(message)
+				// console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
+				connection.sendMyMessageOnChat()
 			})
 			ws.on('chat message', (message: string) => {
 				wss.emit('chat message', message)
 			})
-			var player = new Player(0, "tsuyuzaki", 2, 1)
-			playerSQL.addPlayer(player)
 			console.log('Connect WebSocket client.')
 		})
 		

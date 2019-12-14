@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const PlayerSQL_1 = require("./sql/PlayerSQL");
-const Player_1 = require("./model/Player");
+const connection_1 = require("./connection");
 class Server {
     constructor() {
         this.PORT = process.env.PORT || 8000;
@@ -27,18 +27,15 @@ class Server {
             res.end(data);
         });
         wss.on('connection', (ws) => {
+            const connection = new connection_1.Connection(ws);
             ws.on('message', (message) => {
-                // var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
-                // ws.send(data.toString())
-                var obj = JSON.parse(message);
-                var tmp = obj.phase;
-                console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`);
+                // var obj = JSON.parse(message)
+                // console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
+                connection.sendMyMessageOnChat();
             });
             ws.on('chat message', (message) => {
                 wss.emit('chat message', message);
             });
-            var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
-            playerSQL.addPlayer(player);
             console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
