@@ -8,10 +8,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const General = __importStar(require("./General"));
-class MyMessageOnChat {
+class AnonymousAudienceChat {
     constructor(text) {
         var village = new General.Village();
-        this.chat = {
+        this.data = {
             "@context": [
                 "https://werewolf.world/context/0.2/base.jsonld",
                 "https://werewolf.world/context/0.2/chat.jsonld"
@@ -25,37 +25,23 @@ class MyMessageOnChat {
             "phaseStartTime": "2006-10-07T12:06:56.568+09:00",
             "serverTimestamp": "2006-10-07T12:06:56.568+09:00",
             "clientTimestamp": "2006-10-07T12:06:56.568+09:00",
-            "directionality": "server to client",
-            "intensionalDisclosureRange": "public",
+            "directionality": "client to server",
+            "intensionalDisclosureRange": "anonymousAudience",
             "extensionalDisclosureRange": [],
-            "agent": {
-                "@context": "https://werewolf.world/context/0.2/agent.jsonld",
-                "@id": "https://licos.online/state/0.2/village#3/agent",
-                "id": 1,
-                "name": {
-                    "en": "Walter",
-                    "ja": "ヴァルター"
-                },
-                "image": "https://werewolf.world/image/0.2/Walter.jpg"
-            },
             "isMine": true,
-            "id": 12,
-            "counter": 7,
-            "limit": 10,
-            "interval": "5s",
             "text": {
-                "@value": "",
+                "@value": ">>11\nそれで、あなたは人狼が誰だと思うの？\n\n私はパメラが人狼だと思う。",
                 "@language": "ja"
             },
             "characterLimit": 140,
             "isOver": false
         };
-        this.chat["text"]["@value"] = text;
+        this.data["text"]["@value"] = text;
     }
     get() {
-        var json = JSON.stringify(this.chat);
+        var json = JSON.stringify(this.data);
         return json;
     }
 }
-exports.MyMessageOnChat = MyMessageOnChat;
-//# sourceMappingURL=MyMessageOnChat.js.map
+exports.AnonymousAudienceChat = AnonymousAudienceChat;
+//# sourceMappingURL=AnonymousAudienceChat.js.map

@@ -31,7 +31,48 @@ class Server {
             ws.on('message', (message) => {
                 // var obj = JSON.parse(message)
                 // console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
-                connection.sendMyMessageOnChat();
+                // connection.sendMyMessageOnChat()
+                connection.sendDay();
+                switch (message) {
+                    case 'Day':
+                        connection.sendDay();
+                        break;
+                    case 'Error':
+                        connection.sendError();
+                        break;
+                    case 'FirstMorning':
+                        connection.sendFirstMorning();
+                        break;
+                    case 'FlavorText':
+                        connection.sendFlavorText();
+                        break;
+                    case 'Morning':
+                        connection.sendMorning();
+                        break;
+                    case 'Night':
+                        connection.sendNight();
+                        break;
+                    case 'AnonymousAudienceChat':
+                        connection.sendAnonymousAudienceChat();
+                        break;
+                    case 'OnymousAudienceChat':
+                        connection.sendOnymousAudienceChat();
+                        break;
+                    case 'PostMortem':
+                        connection.sendPostMortem();
+                        break;
+                    case 'Result':
+                        connection.sendResult();
+                        break;
+                    case 'MyMessageOnChat':
+                        connection.sendMyMessageOnChat();
+                        break;
+                    case 'TheirMessageOnChat':
+                        connection.sendTheirMessageOnChat();
+                        break;
+                    default:
+                        break;
+                }
             });
             ws.on('chat message', (message) => {
                 wss.emit('chat message', message);

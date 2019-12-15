@@ -1,7 +1,7 @@
 import * as General from './General'
 
-export class MyMessageOnChat {
-	chat: {
+export class TheirMessageOnChat {
+	data: {
 		"@context": [string, string],
 		"@id": string,
 		"village": General.Village,
@@ -40,7 +40,7 @@ export class MyMessageOnChat {
 	}
 	constructor(text: string) {
 		var village = new General.Village()
-		this.chat = {
+		this.data = {
 			"@context": [
 				"https://werewolf.world/context/0.2/base.jsonld",
 				"https://werewolf.world/context/0.2/chat.jsonld"
@@ -69,22 +69,22 @@ export class MyMessageOnChat {
 				},
 				"image": "https://werewolf.world/image/0.2/Walter.jpg"
 			},
-			"isMine": true,
+			"isMine": false,
 			"id": 12,
 			"counter": 7,
 			"limit": 10,
 			"interval": "5s",
 			"text": {
-				"@value": "",
+				"@value": ">>11\nそれで、あなたは人狼が誰だと思うの？\n\n私はパメラが人狼だと思う。",
 				"@language": "ja"
 			},
 			"characterLimit": 140,
 			"isOver": false
 		}
-		this.chat["text"]["@value"] = text
+		this.data["text"]["@value"] = text
 	}
 	get() {
-		var json = JSON.stringify(this.chat);
+		var json = JSON.stringify(this.data);
 		return json
 	}
 }
