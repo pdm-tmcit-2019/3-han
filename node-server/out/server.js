@@ -1,14 +1,7 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const PlayerSQL = __importStar(require("./sql/PlayerSQL"));
-const Player_1 = require("./model/Player");
+const PlayerSQL_1 = require("./sql/PlayerSQL");
+const connection_1 = require("./connection");
 class Server {
     constructor() {
         this.PORT = process.env.PORT || 8000;
@@ -23,6 +16,7 @@ class Server {
         const app = this.express();
         const server = this.http.createServer(app);
         const wss = new this.ws.Server({ server });
+        const playerSQL = new PlayerSQL_1.PlayerSQL();
         app.use(this.express.static(this.path.join(__dirname, '/../public')));
         app.get('/', (req, res, next) => {
             var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/index.htm'));
@@ -33,19 +27,56 @@ class Server {
             res.end(data);
         });
         wss.on('connection', (ws) => {
+            const connection = new connection_1.Connection(ws);
             ws.on('message', (message) => {
-                // var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
-                // ws.send(data.toString())
-                var obj = JSON.parse(message);
-                var tmp = obj.phase;
-                console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`);
+                // var obj = JSON.parse(message)
+                // console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
+                // connection.sendMyMessageOnChat()
+                connection.sendDay();
+                switch (message) {
+                    case 'Day':
+                        connection.sendDay();
+                        break;
+                    case 'Error':
+                        connection.sendError();
+                        break;
+                    case 'FirstMorning':
+                        connection.sendFirstMorning();
+                        break;
+                    case 'FlavorText':
+                        connection.sendFlavorText();
+                        break;
+                    case 'Morning':
+                        connection.sendMorning();
+                        break;
+                    case 'Night':
+                        connection.sendNight();
+                        break;
+                    case 'AnonymousAudienceChat':
+                        connection.sendAnonymousAudienceChat();
+                        break;
+                    case 'OnymousAudienceChat':
+                        connection.sendOnymousAudienceChat();
+                        break;
+                    case 'PostMortem':
+                        connection.sendPostMortem();
+                        break;
+                    case 'Result':
+                        connection.sendResult();
+                        break;
+                    case 'MyMessageOnChat':
+                        connection.sendMyMessageOnChat();
+                        break;
+                    case 'TheirMessageOnChat':
+                        connection.sendTheirMessageOnChat();
+                        break;
+                    default:
+                        break;
+                }
             });
             ws.on('chat message', (message) => {
                 wss.emit('chat message', message);
             });
-            var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
-            PlayerSQL.initPlayers();
-            PlayerSQL.addPlayer(player);
             console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
