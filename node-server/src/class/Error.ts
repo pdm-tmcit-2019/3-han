@@ -1,25 +1,13 @@
+import * as General from './General'
 
 export class Error {
 	data: {
 		"@context": [string, string],
 		"@id": string,
-		"village": {
-			"@context": string,
-			"@id": string,
-			"id": number,
-			"name": string,
-			"totalNumberOfAgents": number,
-			"lang": string,
-			"chatSettings": {
-				"@context": string,
-				"@id": string,
-				"limit": number,
-				"characterLimit": number
-			}
-		},
+		"village": General.Village,
 		"token": string,
 		"phase": string,
-		"date": number,
+		"day": number,
 		"phaseTimeLimit": number,
 		"phaseStartTime": string,
 		"serverTimestamp": string,
@@ -33,33 +21,21 @@ export class Error {
 			"ja": string
 		},
 		"severity": string,
-		"source": string
+		"source": string,
+		"isFromServer": boolean
 	}
 	constructor(content: string) {
+		var village = new General.Village()
 		this.data = {
 			"@context": [
-				"https://werewolf.world/context/0.2/base.jsonld",
-				"https://werewolf.world/context/0.2/error.jsonld"
+				"https://werewolf.world/village/context/0.3/base.jsonld",
+				"https://werewolf.world/village/context/0.3/error.jsonld"
 			],
-			"@id": "https://licos.online/state/0.2/village#3/errorMessage",
-		
-			"village": {
-				"@context": "https://werewolf.world/context/0.2/village.jsonld",
-				"@id": "https://licos.online/state/0.2/village",
-				"id": 3,
-				"name": "横国の森の奥にある時代に取り残された小さな村",
-				"totalNumberOfAgents": 15,
-				"lang": "ja",
-				"chatSettings": {
-					"@context": "https://werewolf.world/context/0.2/chatSettings.jsonld",
-					"@id": "https://licos.online/state/0.2/village#3/chatSettings",
-					"limit": 10,
-					"characterLimit": 140
-				}
-			},
-			"token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
+			"@id": "https://licos.online/state/0.3/village#3/errorMessage",
+			"village": village,
+			"token": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
 			"phase": "morning",
-			"date": 2,
+			"day": 2,
 			"phaseTimeLimit": 600,
 			"phaseStartTime": "2006-10-07T12:06:56.568+09:00",
 			"serverTimestamp": "2006-10-07T12:06:56.568+09:00",
@@ -67,18 +43,20 @@ export class Error {
 			"directionality": "server to client",
 			"intensionalDisclosureRange": "private",
 			"extensionalDisclosureRange": [],
-			
 			"content": {
 				"en": "Timeout: ignored",
 				"ja": "タイムアウト：　無視されました"
 			},
 			"severity": "error",
-			"source": "{\"token\": \"eFVr3O93oLhmnE8OqTMl5VSVGIV\"}"
+			"source": "{\"token\": \"eFVr3O93oLhmnE8OqTMl5VSVGIV\"}",
+			"isFromServer": true
 		}
 		this.data["content"]["ja"] = content
 	}
 	get() {
-		var json = JSON.stringify(this.data);
+		// var json = JSON.stringify(this.data);
+		var fileGet = new General.FileGet()
+		var json = fileGet.get("error.jsonld")
 		return json
 	}
 }

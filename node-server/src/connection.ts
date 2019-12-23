@@ -1,10 +1,10 @@
 import * as WebSocket from 'ws'
-import {Day} from './class/Day'
 import {Error} from './class/Error'
 import {FirstMorning} from './class/FirstMorning'
 import {FlavorText} from './class/FlavorText'
 import {Morning} from './class/Morning'
 import {Night} from './class/Night'
+import {Noon} from './class/Noon'
 import {AnonymousAudienceChat} from './class/AnonymousAudienceChat'
 import {OnymousAudienceChat} from './class/OnymousAudienceChat'
 import {PostMortem} from './class/PostMortem'
@@ -14,17 +14,10 @@ import {TheirMessageOnChat} from './class/TheirMessageOnChat'
 
 
 export class Connection {
-	fs = require('fs')
-	path = require('path')
 	ws = require('ws')
 	webSocket: WebSocket
 	constructor(ws:WebSocket) {
 		this.webSocket = ws
-	}
-	sendDay() {
-		var day = new Day("abc")
-		var json = day.get()
-		this.webSocket.send(json)
 	}
 	sendError() {
 		var error = new Error("abc")
@@ -49,6 +42,11 @@ export class Connection {
 	sendNight() {
 		var night = new Night()
 		var json = night.get()
+		this.webSocket.send(json)
+	}
+	sendNoon() {
+		var day = new Noon("abc")
+		var json = day.get()
 		this.webSocket.send(json)
 	}
 	sendAnonymousAudienceChat() {

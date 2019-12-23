@@ -11,18 +11,18 @@ const General = __importStar(require("./General"));
 class Night {
     constructor() {
         var village = new General.Village();
-        var agent = new General.Agent();
+        var character = new General.Character();
         var role = new General.Role();
         this.data = {
             "@context": [
-                "https://werewolf.world/context/0.2/base.jsonld",
-                "https://werewolf.world/context/0.2/votingResult.jsonld"
+                "https://werewolf.world/village/context/0.3/base.jsonld",
+                "https://werewolf.world/village/context/0.3/votingResult.jsonld"
             ],
-            "@id": "https://licos.online/state/0.2/village#3/systemMessage",
+            "@id": "https://licos.online/state/0.3/village#3/systemMessage",
             "village": village,
-            "token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
+            "token": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
             "phase": "night",
-            "date": 1,
+            "day": 1,
             "phaseTimeLimit": 180,
             "phaseStartTime": "2006-10-07T12:06:56.568+09:00",
             "serverTimestamp": "2006-10-07T12:06:56.568+09:00",
@@ -32,13 +32,15 @@ class Night {
             "extensionalDisclosureRange": [],
             "votingResultsSummary": [],
             "votingResultsDetails": [],
-            "agent": [agent],
+            "character": [character],
             "role": [role]
         };
-        this.data["agent"].push(agent);
+        this.data["character"].push(character);
     }
     get() {
-        var json = JSON.stringify(this.data);
+        // var json = JSON.stringify(this.data);
+        var fileGet = new General.FileGet();
+        var json = fileGet.get("night.jsonld");
         return json;
     }
 }

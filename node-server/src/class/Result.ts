@@ -1,6 +1,6 @@
 import * as General from './General'
 
-class ResultAgent {
+class ResultCharacter {
 	"@context": string
 	"@id": string
 	isMine: boolean
@@ -29,32 +29,32 @@ class ResultAgent {
 		image: string
 	}
 	constructor() {
-		this["@context"] = "https://werewolf.world/context/0.2/agent.jsonld"
-		this["@id"] = "https://licos.online/state/0.2/village#3/agent#0"
-		this.isMine = false
+		this["@context"] = "https://werewolf.world/village/context/0.3/character.jsonld"
+		this["@id"] = "https://licos.online/state/0.3/village#3/character#1"
+		this.isMine = true
 		this.name = {
-			"en": "Gert",
-			"ja": "ゲルト"
+			"en": "Adil",
+			"ja": "アーディル"
 		}
-		this.image = "https://licos.online/image/0.2/Gert.jpg"
-		this.id = 0
+		this.image = "https://werewolf.world/image/0.3/character_icons/50x50/a_50x50.png"
+		this.id = 1
 		this.role = {
-			"@context": "https://werewolf.world/context/0.2/role.jsonld",
-			"@id": "https://licos.online/state/0.2/village#3/agent#0/role",
+			"@context": "https://werewolf.world/village/context/0.3/role.jsonld",
+			"@id": "https://licos.online/state/0.3/village#3/character#1/role",
 			"name": {
-				"en": "Villager",
-				"ja": "村人"
+				"en": "Seer",
+				"ja": "占い師"
 			},
-			"image": "https://werewolf.world/image/0.2/villager.jpg"
+			"image": "https://werewolf.world/image/0.3/role_icons/50x50withTI/seer_50x50.png"
 		}
 		this.status = "alive"
 		this.result = "win"
 		this.avatar = {
-			"@context": "https://werewolf.world/context/0.2/avatar.jsonld",
-			"@id": "https://licos.online/state/0.2/village#3/agent#0/avatar",
-			"token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
-			"name": "Sato",
-			"image": "https://werewolf.world/image/0.2/Nicholas.jpg"
+			"@context": "https://werewolf.world/village/context/0.3/avatar.jsonld",
+			"@id": "https://licos.online/state/0.3/village#3/character#1/avatar",
+			"token": "3F2504E0-4F89-11D3-9A0C-0305E82C3302",
+			"name": "Suzuki",
+			"image": "https://werewolf.world/image/0.3/character_icons/50x50/c_50x50.png"
 		}
 	}
 }
@@ -68,24 +68,24 @@ class ResultRole {
 		"ja": string
 	}
 	"image": string
-	"numberOfAgents": number
-	"agent": [ResultRoleAgent]
+	"numberOfPlayers": number
+	"character": [ResultRoleCharacter]
 	constructor() {
-		this["@context"] = "https://werewolf.world/context/0.2/role.jsonld"
-		this["@id"] = "https://licos.online/state/0.2/village#3/role#villager"
+		this["@context"] = "https://werewolf.world/village/context/0.3/role.jsonld"
+		this["@id"] = "https://licos.online/state/0.3/village#3/role#villager"
 		this.isMine = false
 		this.name = {
 			"en": "Villager",
 			"ja": "村人"
 		}
-		this.image = "https://werewolf.world/image/0.2/villager.jpg"
-		this.numberOfAgents = 6
-		var resultRoleAgent = new ResultRoleAgent()
-		this.agent = [resultRoleAgent]
+		this.image = "https://werewolf.world/image/0.3/role_icons/50x50withTI/villager_50x50.png"
+		this.numberOfPlayers = 6
+		var resultRoleCharacter = new ResultRoleCharacter()
+		this.character = [resultRoleCharacter]
 	}
 }
 
-class ResultRoleAgent {
+class ResultRoleCharacter {
 	"@context": string
 	"@id": string
 	id: number
@@ -95,14 +95,14 @@ class ResultRoleAgent {
 	}
 	image: string
 	constructor() {
-		this["@context"] = "https://werewolf.world/context/0.2/agent.jsonld"
-		this["@id"] = "https://licos.online/state/0.2/village#3/role#villager/agent#0"
-		this["id"] = 0
+		this["@context"] = "https://werewolf.world/village/context/0.3/character.jsonld"
+		this["@id"] = "https://licos.online/state/0.3/village#3/role#villager/character#15"
+		this["id"] = 15
 		this["name"] = {
-			"en": "Gert",
-			"ja": "ゲルト"
+			"en": "Ryan",
+			"ja": "ライアン"
 		}
-		this["image"] = "https://werewolf.world/image/0.2/Gert.jpg"
+		this["image"] = "https://werewolf.world/image/0.3/character_icons/50x50/r_50x50.png"
 	}
 }
 
@@ -113,7 +113,7 @@ export class Result {
 		"village": General.Village,
 		"token": string,
 		"phase": string,
-		"date": number,
+		"day": number,
 		"phaseTimeLimit": number,
 		"phaseStartTime": string,
 		"serverTimestamp": string,
@@ -125,25 +125,24 @@ export class Result {
 		"votingResultsSummary": [],
 		"votingResultsDetails": [],
 	
-		"agent": [ResultAgent],
+		"character": [ResultCharacter],
 		"role": [ResultRole]
 	}
 
 	constructor() {
 		var village = new General.Village()
-		var agent = new ResultAgent()
+		var character = new ResultCharacter()
 		var role = new ResultRole()
 		this.data = {
 			"@context": [
-				"https://werewolf.world/context/0.2/base.jsonld",
-				"https://werewolf.world/context/0.2/votingResult.jsonld"
+				"https://werewolf.world/village/context/0.3/base.jsonld",
+				"https://werewolf.world/village/context/0.3/votingResult.jsonld"
 			],
-			"@id": "https://licos.online/state/0.2/village#3/systemMessage",
-		
+			"@id": "https://licos.online/state/0.3/village#3/systemMessage",
 			"village": village,
-			"token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
+			"token": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
 			"phase": "result",
-			"date": -1,
+			"day": -1,
 			"phaseTimeLimit": -1,
 			"phaseStartTime": "2006-10-07T12:06:56.568+09:00",
 			"serverTimestamp": "2006-10-07T12:06:56.568+09:00",
@@ -151,17 +150,18 @@ export class Result {
 			"directionality": "server to client",
 			"intensionalDisclosureRange": "private",
 			"extensionalDisclosureRange": [],
-		
 			"votingResultsSummary": [],
 			"votingResultsDetails": [],
 		
-			"agent": [agent],
+			"character": [character],
 			"role": [role]
 		}
-		this.data["agent"].push(agent)
+		this.data["character"].push(character)
 	}
 	get() {
-		var json = JSON.stringify(this.data);
+		// var json = JSON.stringify(this.data);
+		var fileGet = new General.FileGet()
+		var json = fileGet.get("result.jsonld")
 		return json
 	}
 }
