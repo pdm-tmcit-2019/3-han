@@ -14,8 +14,6 @@ const MyMessageOnChat_1 = require("./class/MyMessageOnChat");
 const TheirMessageOnChat_1 = require("./class/TheirMessageOnChat");
 class Connection {
     constructor(ws) {
-        this.fs = require('fs');
-        this.path = require('path');
         this.ws = require('ws');
         this.webSocket = ws;
     }

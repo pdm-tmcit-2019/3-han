@@ -6,6 +6,15 @@ import {PlayerSQL} from './sql/PlayerSQL'
 import {Player} from './model/Player'
 import {Connection} from './connection'
 
+class Game {
+	day: number
+	maxDay: number
+	constructor(maxDay: number) {
+		this.day = 1
+		this.maxDay = maxDay
+	}
+}
+
 class Server {
 	PORT = process.env.PORT || 8000
 
@@ -22,7 +31,6 @@ class Server {
 		const app = this.express()
 		const server = this.http.createServer(app)
 		const wss = new this.ws.Server({server})
-		const playerSQL = new PlayerSQL()
 
 		app.use(this.express.static(this.path.join(__dirname, '/../public')))
 
@@ -38,56 +46,14 @@ class Server {
 
 		wss.on('connection', (ws: WebSocket) => {
 			const connection = new Connection(ws)
+			console.log('Connect WebSocket client.')
+			processStart(connection)
 			ws.on('message', (message: string) => {
-				// var obj = JSON.parse(message)
-				// console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
-				// connection.sendMyMessageOnChat()
-				// connection.sendDay()
-				switch(message) {
-					case 'Noon':
-						connection.sendNoon()
-						break;
-					case 'Error':
-						connection.sendError()
-						break;
-					case 'FirstMorning':
-						connection.sendFirstMorning()
-						break;
-					case 'FlavorText':
-						connection.sendFlavorText()
-						break;
-					case 'Morning':
-						connection.sendMorning()
-						break;
-					case 'Night':
-						connection.sendNight()
-						break;
-					case 'AnonymousAudienceChat':
-						connection.sendAnonymousAudienceChat()
-						break;
-					case 'OnymousAudienceChat':
-						connection.sendOnymousAudienceChat()
-						break;
-					case 'PostMortem':
-						connection.sendPostMortem()
-						break;
-					case 'Result':
-						connection.sendResult()
-						break;
-					case 'MyMessageOnChat':
-						connection.sendMyMessageOnChat()
-						break;
-					case 'TheirMessageOnChat':
-						connection.sendTheirMessageOnChat()
-						break;
-					default:
-						break;
-				}
+				console.log(message)
 			})
 			ws.on('chat message', (message: string) => {
 				wss.emit('chat message', message)
 			})
-			console.log('Connect WebSocket client.')
 		})
 		
 		server.listen(this.PORT, () => {
@@ -97,5 +63,58 @@ class Server {
 	}
 }
 
+
+function processStart(con: Connection) {
+	con.sendFlavorText()
+	con.sendFirstMorning()
+	console.log("Day1")
+	setTimeout(noonPhase, 20000, con)
+	setTimeout(sendMyMessageOnChat, 5000, con)
+	setTimeout(sendTheirMessageOnChat, 10000, con)
+}
+
+function morningPhase(con: Connection) {
+	con.sendFlavorText()
+	con.sendMorning()
+	var str = "Day" + game.day.toString()
+	console.log(str)
+	setTimeout(noonPhase, 20000, con)
+	setTimeout(sendMyMessageOnChat, 5000, con)
+	setTimeout(sendTheirMessageOnChat, 10000, con)
+}
+
+function noonPhase(con: Connection) {
+	con.sendNoon()
+	setTimeout(nightPhase, 10000, con)
+}
+
+function nightPhase(con: Connection) {
+	con.sendNight()
+	if (game.day >= game.maxDay) {
+		setTimeout(resultPhase, 10000, con)
+	} else {
+		game.day++
+		setTimeout(morningPhase, 10000, con)
+	}
+}
+
+function resultPhase(con: Connection) {
+	con.sendResult()
+	setTimeout(postMortemPhase, 10000, con)
+}
+
+function postMortemPhase(con: Connection) {
+	con.sendPostMortem()
+}
+
+function sendMyMessageOnChat(con: Connection) {
+	con.sendMyMessageOnChat()
+}
+
+function sendTheirMessageOnChat(con: Connection) {
+	con.sendTheirMessageOnChat()
+}
+
+const game = new Game(3)
 const server = new Server()
 server.start()

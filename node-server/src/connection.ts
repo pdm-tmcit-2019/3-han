@@ -14,8 +14,6 @@ import {TheirMessageOnChat} from './class/TheirMessageOnChat'
 
 
 export class Connection {
-	fs = require('fs')
-	path = require('path')
 	ws = require('ws')
 	webSocket: WebSocket
 	constructor(ws:WebSocket) {
