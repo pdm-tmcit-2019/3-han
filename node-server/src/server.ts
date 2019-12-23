@@ -42,10 +42,10 @@ class Server {
 				// var obj = JSON.parse(message)
 				// console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
 				// connection.sendMyMessageOnChat()
-				connection.sendDay()
+				// connection.sendDay()
 				switch(message) {
-					case 'Day':
-						connection.sendDay()
+					case 'Noon':
+						connection.sendNoon()
 						break;
 					case 'Error':
 						connection.sendError()

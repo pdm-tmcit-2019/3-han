@@ -1,30 +1,26 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const General = __importStar(require("./General"));
 class Error {
     constructor(content) {
+        var village = new General.Village();
         this.data = {
             "@context": [
-                "https://werewolf.world/context/0.2/base.jsonld",
-                "https://werewolf.world/context/0.2/error.jsonld"
+                "https://werewolf.world/village/context/0.3/base.jsonld",
+                "https://werewolf.world/village/context/0.3/error.jsonld"
             ],
-            "@id": "https://licos.online/state/0.2/village#3/errorMessage",
-            "village": {
-                "@context": "https://werewolf.world/context/0.2/village.jsonld",
-                "@id": "https://licos.online/state/0.2/village",
-                "id": 3,
-                "name": "横国の森の奥にある時代に取り残された小さな村",
-                "totalNumberOfAgents": 15,
-                "lang": "ja",
-                "chatSettings": {
-                    "@context": "https://werewolf.world/context/0.2/chatSettings.jsonld",
-                    "@id": "https://licos.online/state/0.2/village#3/chatSettings",
-                    "limit": 10,
-                    "characterLimit": 140
-                }
-            },
-            "token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
+            "@id": "https://licos.online/state/0.3/village#3/errorMessage",
+            "village": village,
+            "token": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
             "phase": "morning",
-            "date": 2,
+            "day": 2,
             "phaseTimeLimit": 600,
             "phaseStartTime": "2006-10-07T12:06:56.568+09:00",
             "serverTimestamp": "2006-10-07T12:06:56.568+09:00",
@@ -37,12 +33,15 @@ class Error {
                 "ja": "タイムアウト：　無視されました"
             },
             "severity": "error",
-            "source": "{\"token\": \"eFVr3O93oLhmnE8OqTMl5VSVGIV\"}"
+            "source": "{\"token\": \"eFVr3O93oLhmnE8OqTMl5VSVGIV\"}",
+            "isFromServer": true
         };
         this.data["content"]["ja"] = content;
     }
     get() {
-        var json = JSON.stringify(this.data);
+        // var json = JSON.stringify(this.data);
+        var fileGet = new General.FileGet();
+        var json = fileGet.get("error.jsonld");
         return json;
     }
 }

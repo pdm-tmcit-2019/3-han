@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Day_1 = require("./class/Day");
 const Error_1 = require("./class/Error");
 const FirstMorning_1 = require("./class/FirstMorning");
 const FlavorText_1 = require("./class/FlavorText");
 const Morning_1 = require("./class/Morning");
 const Night_1 = require("./class/Night");
+const Noon_1 = require("./class/Noon");
 const AnonymousAudienceChat_1 = require("./class/AnonymousAudienceChat");
 const OnymousAudienceChat_1 = require("./class/OnymousAudienceChat");
 const PostMortem_1 = require("./class/PostMortem");
@@ -18,11 +18,6 @@ class Connection {
         this.path = require('path');
         this.ws = require('ws');
         this.webSocket = ws;
-    }
-    sendDay() {
-        var day = new Day_1.Day("abc");
-        var json = day.get();
-        this.webSocket.send(json);
     }
     sendError() {
         var error = new Error_1.Error("abc");
@@ -47,6 +42,11 @@ class Connection {
     sendNight() {
         var night = new Night_1.Night();
         var json = night.get();
+        this.webSocket.send(json);
+    }
+    sendNoon() {
+        var day = new Noon_1.Noon("abc");
+        var json = day.get();
         this.webSocket.send(json);
     }
     sendAnonymousAudienceChat() {

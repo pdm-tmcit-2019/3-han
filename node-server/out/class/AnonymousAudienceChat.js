@@ -13,14 +13,14 @@ class AnonymousAudienceChat {
         var village = new General.Village();
         this.data = {
             "@context": [
-                "https://werewolf.world/context/0.2/base.jsonld",
-                "https://werewolf.world/context/0.2/chat.jsonld"
+                "https://werewolf.world/village/context/0.3/base.jsonld",
+                "https://werewolf.world/village/context/0.3/chat.jsonld"
             ],
-            "@id": "https://licos.online/state/0.2/village#3/playerMessage",
+            "@id": "https://licos.online/state/0.3/village#3/chatMessage",
             "village": village,
-            "token": "eFVr3O93oLhmnE8OqTMl5VSVGIV",
+            "token": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
             "phase": "morning",
-            "date": 1,
+            "day": 1,
             "phaseTimeLimit": 600,
             "phaseStartTime": "2006-10-07T12:06:56.568+09:00",
             "serverTimestamp": "2006-10-07T12:06:56.568+09:00",
@@ -33,13 +33,15 @@ class AnonymousAudienceChat {
                 "@value": ">>11\nそれで、あなたは人狼が誰だと思うの？\n\n私はパメラが人狼だと思う。",
                 "@language": "ja"
             },
-            "characterLimit": 140,
-            "isOver": false
+            "maxLengthOfUnicodeCodePoints": 140,
+            "isFromServer": true
         };
-        this.data["text"]["@value"] = text;
+        // this.data["text"]["@value"] = text
     }
     get() {
-        var json = JSON.stringify(this.data);
+        // var json = JSON.stringify(this.data);
+        var fileGet = new General.FileGet();
+        var json = fileGet.get("anonymousAudienceChat.jsonld");
         return json;
     }
 }
