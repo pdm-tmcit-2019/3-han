@@ -1,5 +1,5 @@
 # coding: utf8
-
+import random
 
 class MeaningExtraction:
     ROLE_LIST = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]    # 役職一覧
@@ -39,3 +39,12 @@ class MeaningExtraction:
                     if sentence.find(self.ROLE_LIST[roleIndex]) != -1:
                         return roleIndex
         return -1
+
+    # 占い先を決定
+    # fortunedList 0:占ってない, 1:占った
+    def decisionFortune(self, fortunedList):
+        randomList = []
+        for i in range(len(fortunedList)):
+            if(fortunedList[i] == 0):
+                randomList.append(i)
+        return random.choice(randomList)
