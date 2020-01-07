@@ -48,3 +48,12 @@ class MeaningExtraction:
             if(fortunedList[i] == 0):
                 randomList.append(i)
         return random.choice(randomList)
+
+    # COしてない人を促す
+    # coList 0:してない 1:してる
+    def promptCo(self, coList):
+        noCoList = []
+        for i in range(len(coList)):
+            if(coList[i] == 0):
+                noCoList.append(i)
+        return noCoList
