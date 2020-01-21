@@ -23,8 +23,8 @@ class MeaningExtraction:
                     if sentence.find(self.FIRST_PERSON_LIST[indexFirst]) != -1:
                         return index
         return -1
-	
-	# 霊媒対象決定
+
+    # 霊媒対象決定
     def decideMediumTo(self, beforeDeadPeople):
         # 霊媒対象は毎ターン1人しか出ないから吊った人
         return beforeDeadPeople;
@@ -39,27 +39,25 @@ class MeaningExtraction:
         return protectTarget[random.randint(0, len(protectTarget)-1)]
 
     # 吊り先決定
-    def decideKillTo(self, nowRoleList):
-        killTarget = []
+    def decideKillTo(self, nowRoleList, nowAliveList):
+        alive = []
         for index in range(len(nowRoleList)):
-            for enemyRole in self.ENEMY_ROLE_LIST:
-                if(nowRoleList[index] == enemyRole):
-                    killTarget.append(index)
-                    break
+            if(nowAliveList[index]):
+                alive.append(index)
+        killTarget = [alive[i] for i in range(len(alive)) if (nowRoleList[alive[i]] == "狂人" or nowRoleList[alive[i]] == "人狼" or nowRoleList[alive[i]] == "妖狐")]
         if(len(killTarget) == 0):
-            killTarget.append(random.randint(0, len(nowRoleList)))
+            killTarget.append(alive[random.randint(0, len(alive)-1)])
         return killTarget[random.randint(0, len(killTarget)-1)]
 
     # 噛み先決定
-    def decideBiteTo(self, nowRoleList):
-        biteTarget = []
+    def decideBiteTo(self, nowRoleList, nowAliveList):
+        alive = []
         for index in range(len(nowRoleList)):
-            for humanRole in self.HUMAN_ROLE_LIST:
-                if(nowRoleList[index] == humanRole):
-                    biteTarget.append(index)
-                    break
+            if(nowAliveList[index]):
+                alive.append(index)
+        biteTarget = [alive[i] for i in range(len(alive)) if (nowRoleList[alive[i]] != "狂人" and nowRoleList[alive[i]] != "人狼")]
         if(len(biteTarget) == 0):
-            biteTarget.append(random.randint(0, len(nowRoleList)))
+            biteTarget.append(alive[random.randint(0, len(alive)-1)])
         return biteTarget[random.randint(0, len(biteTarget)-1)]
 
 #テスト
@@ -67,12 +65,14 @@ class MeaningExtraction:
 # testSentence = "私は人狼です"
 # res = SyntacticAnalysis.SyntacsAnalysis(testSentence).syntacsAnalysis()
 
-# alivePeople = [1, 1, 0, 1, 1, 0, 0, 0, 1]
-# nowRoleList = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]
+# alivePeople = [1, 1, 0, 1, 1, 1, 1, 1]
+# nowRoleList = ["村人", "占い師", "霊媒師", "狩人", "双子", "人狼", "妖狐", "狂人"]
+
+# print(len(nowRoleList))
 
 # test = MeaningExtraction()
 # print(test.checkCo(res))
 # print(test.decideMediumTo(5))
 # print(test.decideProtectTo(alivePeople, 1))
-# print(nowRoleList[test.decideKillTo(nowRoleList)])
-# print(nowRoleList[test.decideBiteTo(nowRoleList)])
+# print(nowRoleList[test.decideKillTo(nowRoleList, alivePeople)])
+# print(nowRoleList[test.decideBiteTo(nowRoleList, alivePeople)])
