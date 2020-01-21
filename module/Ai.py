@@ -13,6 +13,12 @@ class Ai:
     def __init__(self, playerNameList, myName, myClass):
         self.playerNameList = playerNameList
         self.playerN = len(playerNameList)
+
+        # 死んでいる人リスト
+        self.deathList = []
+        for i in range(self.playerN):
+            self.deathList.append(0)
+
         # 占ったリスト
         self.divulgedList = []
         for i in range(self.playerN):
@@ -27,12 +33,18 @@ class Ai:
         self.divulgedList[myIndex] = 1
         self.coList[myIndex] = 1
 
+    # 死んだ人を反映
+    def reflectDeathPlayer(self, deathPlayerName):
+        deathIndex = self.getPlayerIndex(deathPlayerName)
+        self.deathList[deathIndex] = 1
+
     # プレイヤー名からindexを返す
     def getPlayerIndex(self, playerName):
         for i in range(self.playerN):
             if self.playerNameList[i] == playerName:
                 return i
         return -1
+
 
     def input(self, talkSentence, talkPlayerName):
         # 形態素解析
@@ -64,7 +76,7 @@ class Ai:
 
         # coしてない人を催促する
         coStr = ""
-        noCoList = meaningExtraction.promptCo(self.coList)
+        noCoList = meaningExtraction.promptCo(self.coList, self.deathList)
         for i in range(len(noCoList)):
             if i == 0:
                 coStr += self.playerNameList[noCoList[i]]
@@ -72,7 +84,7 @@ class Ai:
                 coStr += ", " + self.playerNameList[noCoList[i]]
         coStr += "はCOしてください"
 
-        if len(coStr) != 0:
+        if len(noCoList) != 0:
             outputStrList.append(coStr)
 
         return outputStrList
@@ -83,6 +95,10 @@ myName0 = "あ"
 myClass0 = "人狼"
 
 ai = Ai(playerNameList0, myName0, myClass0)
+ai.reflectDeathPlayer("い")
+# ai.reflectDeathPlayer("お")
+# ai.reflectDeathPlayer("え")
+
 ai.input("私は村人です", "う")
 
 print(ai.output())
