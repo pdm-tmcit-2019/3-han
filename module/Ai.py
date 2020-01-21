@@ -59,21 +59,20 @@ class Ai:
             self.coList[coPlayerIndex] = 1
     
     def output(self):
+        meaningExtraction = MeaningExtraction.MeaningExtraction()
         outputStrList = []
 
         # coしてない人を催促する
-        coFlag = False
         coStr = ""
-        for i in range(self.playerN):
-            if self.coList[i] != 1:
-                if coFlag == False:
-                    coStr += self.playerNameList[i]
-                else:
-                    coStr += ", " + self.playerNameList[i]
-                coFlag = True
+        noCoList = meaningExtraction.promptCo(self.coList)
+        for i in range(len(noCoList)):
+            if i == 0:
+                coStr += self.playerNameList[noCoList[i]]
+            else:
+                coStr += ", " + self.playerNameList[noCoList[i]]
         coStr += "はCOしてください"
-        
-        if coFlag == True:
+
+        if len(coStr) != 0:
             outputStrList.append(coStr)
 
         return outputStrList
