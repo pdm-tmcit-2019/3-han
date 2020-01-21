@@ -51,9 +51,9 @@ class MeaningExtraction:
 
     # COしてない人を促す
     # coList 0:してない 1:してる
-    def promptCo(self, coList):
+    def promptCo(self, coList, deathList):
         noCoList = []
         for i in range(len(coList)):
-            if(coList[i] == 0):
+            if coList[i] == 0 and deathList[i] == 0:
                 noCoList.append(i)
         return noCoList
