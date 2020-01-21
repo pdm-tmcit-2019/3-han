@@ -1,4 +1,4 @@
-# coding: utf8
+﻿#coding: utf8
 import random
 import sys
 import os
@@ -25,13 +25,13 @@ class MeaningExtraction:
         return -1
 
     def decideMediumTo(self, beforeDeadPeople):
-        # 霊媒対象は毎ターン1人しか出ない
+        # 霊媒対象は毎ターン1人しか出ないから吊った人
         return beforeDeadPeople;
 
     def decideProtectTo(self, alivePeople, beforeProtected):
         protectTarget = []
         for index in range(len(alivePeople)):
-            # 前に守ってない人の中で生きてる人
+            # 前に守ってない人の中で生きてる人からランダム
             if index != beforeProtected and alivePeople[index] == 1:
                 protectTarget.append(index)
         return protectTarget[random.randint(0, len(protectTarget)-1)]
@@ -47,14 +47,14 @@ class MeaningExtraction:
 
 #テスト
 
-testSentence = "私は人狼です"
-res = SyntacticAnalysis.SyntacsAnalysis(testSentence).syntacsAnalysis()
+#testSentence = "私は人狼です"
+#res = SyntacticAnalysis.SyntacsAnalysis(testSentence).syntacsAnalysis()
 
-alivePeople = [1, 1, 0, 1, 1, 0, 0, 0, 1]
-nowRoleList = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]
+#alivePeople = [1, 1, 0, 1, 1, 0, 0, 0, 1]
+#nowRoleList = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]
 
-test = MeaningExtraction()
-print(test.checkCo(res))
-print(test.decideMediumTo(5))
-print(test.decideProtectTo(alivePeople, 1))
-print(nowRoleList[test.decideKillTo(nowRoleList)])
+#test = MeaningExtraction()
+#print(test.checkCo(res))
+#print(test.decideMediumTo(5))
+#print(test.decideProtectTo(alivePeople, 1))
+#print(nowRoleList[test.decideKillTo(nowRoleList)])
