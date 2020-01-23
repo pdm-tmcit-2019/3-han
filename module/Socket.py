@@ -1,9 +1,8 @@
 # coding: utf-8
+# あと残り、jsonからデータをうまいこと引っ張ってサブスクライブするだけ
 
-import rx
 import os
-import sys
-import urllib
+import rx
 import json
 import string
 from rx import operators as ops
@@ -11,8 +10,6 @@ from rx.subject import Subject
 from rx.scheduler import NewThreadScheduler
 import websocket
 import threading
-import json
-# scheduler = IOLoopScheduler(ioloop.IOLoop.current())
 
 URL = "ws://localhost:8000"
 
@@ -20,32 +17,34 @@ class Socket:
 	def __init__(self):
 		self.stream = Subject()
 		url = URL
-		react = self.stream.pipe(
-			ops.observe_on(NewThreadScheduler()),
-			ops.map(lambda x: json.dump(x)),
-			ops.buffer_with_count(10),
-		)
-
-		react.subscribe()
 
 		websocket.enableTrace(True)
 		ws = websocket.WebSocketApp(url,
-			on_open = self.on_open,
 			on_message = self.on_message,
 			on_error = self.on_error,
-			on_close = self.on_close,
+		)
+		react = self.stream.pipe(
+			ops.observe_on(NewThreadScheduler()),
+			ops.map(lambda x: x["day"]),
+			#ops.map(lambda obj: obj["character"]["name"]),
+			#ops.map(lambda x: x["role"]["name"]),
+			#ops.map(lambda x: x["text"]),
 		)
 
-		ws.run_forever()
+		react.subscribe(print)
 
-	def on_open(ws):
-		print("connected.")
+		try :
+			ws.run_forever()
+		except KeyboardInterrupt:
+			self.stream.dispose()
+			ws.on_close()
 
-	def on_close(ws):
-		print("disconnected.")
+	def on_message(self, message):
+		obj = json.loads(message)
+		self.stream.on_next(obj)
 
-	def on_message(ws, message):
-		print(message)
-
-	def on_error(ws, error):
+	def on_error(self, error):
 		print(error)
+
+if __name__ == '__main__':
+	ws_exection = Socket()
