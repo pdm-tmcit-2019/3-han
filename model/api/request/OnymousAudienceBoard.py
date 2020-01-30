@@ -15,5 +15,7 @@ class OnymousAudienceBoard:
 		json_data["prediction"] = prediction
 		json_data["avatar"]["name"] = self.avatar_name
 		json_data["character"]["name"]["en"] = character_name
+		json_data["character"]["name"]["ja"] = character_name
 		json_data["role"]["name"]["en"] = role_name
+		json_data["role"]["name"]["ja"] = role_name
 		return str(json_data)
