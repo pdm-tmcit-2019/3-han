@@ -6,7 +6,7 @@ class Scroll:
 	my_character_role = None
 
 	def __init__(self):
-		self.my_character_name = "villager1"
+		self.my_character_name = "Adil"
 		self.my_character_role = "Villager"
 
 	def get(self):
