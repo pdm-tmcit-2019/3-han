@@ -42,10 +42,10 @@ class MeaningExtraction:
 
     # 占い先を決定
     # fortunedList 0:占ってない, 1:占った
-    def decisionFortune(self, fortunedList):
+    def decisionFortune(self, fortunedList, deathList):
         randomList = []
         for i in range(len(fortunedList)):
-            if(fortunedList[i] == 0):
+            if fortunedList[i] == 0 and deathList[i] == 0:
                 randomList.append(i)
         return random.choice(randomList)
 

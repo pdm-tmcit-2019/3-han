@@ -13,6 +13,11 @@ class Ai:
     def __init__(self, playerNameList, myName, myClass):
         self.playerNameList = playerNameList
         self.playerN = len(playerNameList)
+        self.myClass = myClass
+
+        # 占った結果を保持するよう
+        self.fortunedIndex = -1
+        self.fortunedResult = -1
 
         # 死んでいる人リスト
         self.deathList = []
@@ -44,7 +49,6 @@ class Ai:
             if self.playerNameList[i] == playerName:
                 return i
         return -1
-
 
     def input(self, talkSentence, talkPlayerName):
         # 形態素解析
@@ -87,15 +91,39 @@ class Ai:
         if len(noCoList) != 0:
             outputStrList.append(coStr)
 
+        # 占い師の場合結果を発言する
+        if self.myClass == "占い師":
+            fortuneStr = self.playerNameList[self.fortunedIndex] + "は、"
+            if self.fortunedResult == 0:
+                fortuneStr += "村人でした。"
+            elif self.fortunedResult == 1:
+                fortuneStr += "人狼でした。"
+            outputStrList.append(fortuneStr)
+
+
         return outputStrList
 
+    # 占い師の場合のみ呼ぶ
+    def fortune(self):
+        meaningExtraction = MeaningExtraction.MeaningExtraction()
+        targetIndex = meaningExtraction.decisionFortune(self.divulgedList, self.deathList)
+        self.divulgedList[targetIndex] = 1
 
-playerNameList0 = ["あ", "い", "う", "え", "お"]
+        # サーバーに問い合わせるモデルを呼ぶ
+        targetResult = 1    # 0:村人, 1:人狼
+
+        self.fortunedIndex = targetIndex
+        self.fortunedResult = targetResult
+
+
+
+playerNameList0 = ["あ", "い", "田中", "佐藤", "鈴木"]
 myName0 = "あ"
-myClass0 = "人狼"
+myClass0 = "占い師"
 
 ai = Ai(playerNameList0, myName0, myClass0)
 ai.reflectDeathPlayer("い")
+ai.fortune()
 # ai.reflectDeathPlayer("お")
 # ai.reflectDeathPlayer("え")
 
