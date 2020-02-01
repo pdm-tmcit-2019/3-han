@@ -158,6 +158,18 @@ class Ai:
 
         # サーバに送信
 
+    # 最初にCOする
+    def firstCo(self):
+        coStr = "私は、"
+        if self.myClass == "占い師":
+            coStr += self.myClass
+        else:
+            coStr += "村人"
+        coStr += "です。"
+
+        # サーバに送信
+        print(coStr)
+
 playerNameList0 = ["あ", "い", "田中", "佐藤", "鈴木"]
 myName0 = "あ"
 myClass0 = "占い師"
