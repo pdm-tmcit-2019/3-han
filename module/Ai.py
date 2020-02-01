@@ -20,6 +20,9 @@ class Ai:
         self.fortunedIndex = -1
         self.fortunedResult = -1
 
+        # 前回守ったプレイヤー(狩人)
+        self.beforeProtectedIndex = -1
+
         # プレイヤーの役職リスト(わからない場合は空白)
         self.playerRollList = []
         for i in range(self.playerN):
@@ -138,7 +141,15 @@ class Ai:
         biteIndex = meaningExtraction.decideBiteTo(self.playerRollList, self.getAliveList(), self.getPlayerIndex(self.myName))
 
         # サーバーに送信
+    
+    # 狩人の場合の守る先を決定
+    def decideProtectTo(self):
+        meaningExtraction = MeaningExtraction.MeaningExtraction()
+        protectIndex = meaningExtraction.decideProtectTo(self.getAliveList(), self.beforeProtectedIndex, self.getPlayerIndex(self.myName))
 
+        # サーバに送信
+
+        self.beforeProtectedIndex = protectIndex
 
 playerNameList0 = ["あ", "い", "田中", "佐藤", "鈴木"]
 myName0 = "あ"

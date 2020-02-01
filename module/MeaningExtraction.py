@@ -30,11 +30,11 @@ class MeaningExtraction:
         return beforeDeadPeople;
 
     # 自分が狩人で守る対象決定
-    def decideProtectTo(self, alivePeople, beforeProtected):
+    def decideProtectTo(self, alivePeople, beforeProtected, myIndex):
         protectTarget = []
         for index in range(len(alivePeople)):
             # 前に守ってない人の中で生きてる人からランダム
-            if index != beforeProtected and alivePeople[index] == 1:
+            if index != beforeProtected and alivePeople[index] == 1 and index != myIndex:
                 protectTarget.append(index)
         return protectTarget[random.randint(0, len(protectTarget)-1)]
 
