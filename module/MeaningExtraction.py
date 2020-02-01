@@ -50,10 +50,10 @@ class MeaningExtraction:
         return killTarget[random.randint(0, len(killTarget)-1)]
 
     # 噛み先決定
-    def decideBiteTo(self, nowRoleList, nowAliveList):
+    def decideBiteTo(self, nowRoleList, nowAliveList, myIndex):
         alive = []
         for index in range(len(nowRoleList)):
-            if(nowAliveList[index]):
+            if(nowAliveList[index] and index != myIndex):
                 alive.append(index)
         biteTarget = [alive[i] for i in range(len(alive)) if (nowRoleList[alive[i]] != "狂人" and nowRoleList[alive[i]] != "人狼")]
         if(len(biteTarget) == 0):

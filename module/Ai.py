@@ -14,10 +14,16 @@ class Ai:
         self.playerNameList = playerNameList
         self.playerN = len(playerNameList)
         self.myClass = myClass
+        self.myName = myName
 
         # 占った結果を保持するよう
         self.fortunedIndex = -1
         self.fortunedResult = -1
+
+        # プレイヤーの役職リスト(わからない場合は空白)
+        self.playerRollList = []
+        for i in range(self.playerN):
+            self.playerRollList.append("")
 
         # 死んでいる人リスト
         self.deathList = []
@@ -37,6 +43,17 @@ class Ai:
         myIndex = self.getPlayerIndex(myName)
         self.divulgedList[myIndex] = 1
         self.coList[myIndex] = 1
+        self.playerRollList[myIndex] = myClass
+
+    # deathListから反転したaliveListを取得
+    def getAliveList(self):
+        alive = []
+        for i in range(self.playerN):
+            if self.deathList[i] == 1:
+                alive.append(0)
+            else:
+                alive.append(1)
+        return alive
 
     # 死んだ人を反映
     def reflectDeathPlayer(self, deathPlayerName):
@@ -115,6 +132,12 @@ class Ai:
         self.fortunedIndex = targetIndex
         self.fortunedResult = targetResult
 
+    # 人狼の場合の噛み先
+    def decideBiteTo(self):
+        meaningExtraction = MeaningExtraction.MeaningExtraction()
+        biteIndex = meaningExtraction.decideBiteTo(self.playerRollList, self.getAliveList(), self.getPlayerIndex(self.myName))
+
+        # サーバーに送信
 
 
 playerNameList0 = ["あ", "い", "田中", "佐藤", "鈴木"]
