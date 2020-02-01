@@ -151,6 +151,13 @@ class Ai:
 
         self.beforeProtectedIndex = protectIndex
 
+    # 投票先を決定
+    def decidePostTo(self):
+        meaningExtraction = MeaningExtraction.MeaningExtraction()
+        postIndex = meaningExtraction.decideBiteTo(self.playerRollList, self.getAliveList(), self.getPlayerIndex(self.myName))
+
+        # サーバに送信
+
 playerNameList0 = ["あ", "い", "田中", "佐藤", "鈴木"]
 myName0 = "あ"
 myClass0 = "占い師"

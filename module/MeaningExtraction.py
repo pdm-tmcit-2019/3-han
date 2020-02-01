@@ -39,10 +39,10 @@ class MeaningExtraction:
         return protectTarget[random.randint(0, len(protectTarget)-1)]
 
     # 吊り先決定
-    def decideKillTo(self, nowRoleList, nowAliveList):
+    def decideKillTo(self, nowRoleList, nowAliveList, myIndex):
         alive = []
         for index in range(len(nowRoleList)):
-            if(nowAliveList[index]):
+            if(nowAliveList[index] and index != myIndex):
                 alive.append(index)
         killTarget = [alive[i] for i in range(len(alive)) if (nowRoleList[alive[i]] == "狂人" or nowRoleList[alive[i]] == "人狼" or nowRoleList[alive[i]] == "妖狐")]
         if(len(killTarget) == 0):
