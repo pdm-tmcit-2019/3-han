@@ -2,8 +2,18 @@ import {NextFunction, Request, Response} from 'express'
 import * as express from 'express'
 import * as http from 'http'
 import * as WebSocket from 'ws'
-import * as PlayerSQL from './sql/PlayerSQL'
+import {PlayerSQL} from './sql/PlayerSQL'
 import {Player} from './model/Player'
+import {Connection} from './connection'
+
+class Game {
+	day: number
+	maxDay: number
+	constructor(maxDay: number) {
+		this.day = 1
+		this.maxDay = maxDay
+	}
+}
 
 class Server {
 	PORT = process.env.PORT || 8000
@@ -35,20 +45,15 @@ class Server {
 		})
 
 		wss.on('connection', (ws: WebSocket) => {
+			const connection = new Connection(ws)
+			console.log('Connect WebSocket client.')
+			processStart(connection)
 			ws.on('message', (message: string) => {
-				// var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
-				// ws.send(data.toString())
-				var obj = JSON.parse(message)
-				var tmp = obj.phase
-				console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`)
+				console.log(message)
 			})
 			ws.on('chat message', (message: string) => {
 				wss.emit('chat message', message)
 			})
-			var player = new Player(0, "tsuyuzaki", 2, 1)
-			PlayerSQL.initPlayers()
-			PlayerSQL.addPlayer(player)
-			console.log('Connect WebSocket client.')
 		})
 		
 		server.listen(this.PORT, () => {
@@ -58,5 +63,58 @@ class Server {
 	}
 }
 
+
+function processStart(con: Connection) {
+	con.sendFlavorText()
+	con.sendFirstMorning()
+	console.log("Day1")
+	setTimeout(noonPhase, 20000, con)
+	setTimeout(sendMyMessageOnChat, 5000, con)
+	setTimeout(sendTheirMessageOnChat, 10000, con)
+}
+
+function morningPhase(con: Connection) {
+	con.sendFlavorText()
+	con.sendMorning()
+	var str = "Day" + game.day.toString()
+	console.log(str)
+	setTimeout(noonPhase, 20000, con)
+	setTimeout(sendMyMessageOnChat, 5000, con)
+	setTimeout(sendTheirMessageOnChat, 10000, con)
+}
+
+function noonPhase(con: Connection) {
+	con.sendNoon()
+	setTimeout(nightPhase, 10000, con)
+}
+
+function nightPhase(con: Connection) {
+	con.sendNight()
+	if (game.day >= game.maxDay) {
+		setTimeout(resultPhase, 10000, con)
+	} else {
+		game.day++
+		setTimeout(morningPhase, 10000, con)
+	}
+}
+
+function resultPhase(con: Connection) {
+	con.sendResult()
+	setTimeout(postMortemPhase, 10000, con)
+}
+
+function postMortemPhase(con: Connection) {
+	con.sendPostMortem()
+}
+
+function sendMyMessageOnChat(con: Connection) {
+	con.sendMyMessageOnChat()
+}
+
+function sendTheirMessageOnChat(con: Connection) {
+	con.sendTheirMessageOnChat()
+}
+
+const game = new Game(3)
 const server = new Server()
 server.start()

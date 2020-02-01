@@ -1,14 +1,12 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const PlayerSQL = __importStar(require("./sql/PlayerSQL"));
-const Player_1 = require("./model/Player");
+const connection_1 = require("./connection");
+class Game {
+    constructor(maxDay) {
+        this.day = 1;
+        this.maxDay = maxDay;
+    }
+}
 class Server {
     constructor() {
         this.PORT = process.env.PORT || 8000;
@@ -33,20 +31,15 @@ class Server {
             res.end(data);
         });
         wss.on('connection', (ws) => {
+            const connection = new connection_1.Connection(ws);
+            console.log('Connect WebSocket client.');
+            processStart(connection);
             ws.on('message', (message) => {
-                // var data = this.fs.readFileSync(this.path.join(__dirname, '/../public/server2client/flavorText.jsonld'))
-                // ws.send(data.toString())
-                var obj = JSON.parse(message);
-                var tmp = obj.phase;
-                console.log(`Day:${obj.day},Phase:${obj.phase},MyJob:${obj.myCharacter.role.name.en},Text:${obj.text["@value"]}`);
+                console.log(message);
             });
             ws.on('chat message', (message) => {
                 wss.emit('chat message', message);
             });
-            var player = new Player_1.Player(0, "tsuyuzaki", 2, 1);
-            PlayerSQL.initPlayers();
-            PlayerSQL.addPlayer(player);
-            console.log('Connect WebSocket client.');
         });
         server.listen(this.PORT, () => {
             console.log(`server started. PORT:${this.PORT}`);
@@ -54,6 +47,51 @@ class Server {
         });
     }
 }
+function processStart(con) {
+    con.sendFlavorText();
+    con.sendFirstMorning();
+    console.log("Day1");
+    setTimeout(noonPhase, 20000, con);
+    setTimeout(sendMyMessageOnChat, 5000, con);
+    setTimeout(sendTheirMessageOnChat, 10000, con);
+}
+function morningPhase(con) {
+    con.sendFlavorText();
+    con.sendMorning();
+    var str = "Day" + game.day.toString();
+    console.log(str);
+    setTimeout(noonPhase, 20000, con);
+    setTimeout(sendMyMessageOnChat, 5000, con);
+    setTimeout(sendTheirMessageOnChat, 10000, con);
+}
+function noonPhase(con) {
+    con.sendNoon();
+    setTimeout(nightPhase, 10000, con);
+}
+function nightPhase(con) {
+    con.sendNight();
+    if (game.day >= game.maxDay) {
+        setTimeout(resultPhase, 10000, con);
+    }
+    else {
+        game.day++;
+        setTimeout(morningPhase, 10000, con);
+    }
+}
+function resultPhase(con) {
+    con.sendResult();
+    setTimeout(postMortemPhase, 10000, con);
+}
+function postMortemPhase(con) {
+    con.sendPostMortem();
+}
+function sendMyMessageOnChat(con) {
+    con.sendMyMessageOnChat();
+}
+function sendTheirMessageOnChat(con) {
+    con.sendTheirMessageOnChat();
+}
+const game = new Game(3);
 const server = new Server();
 server.start();
 //# sourceMappingURL=server.js.map

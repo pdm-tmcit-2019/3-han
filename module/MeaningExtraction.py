@@ -4,10 +4,10 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from module import SyntacticAnalysis
-
+    
 class MeaningExtraction:
-    ROLE_LIST = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]
-    FIRST_PERSON_LIST = ["私", "わたし", "僕", "ぼく"]
+    ROLE_LIST = ["村人", "占い師", "霊媒師", "狩人", "双子", "狂人", "人狼", "妖狐"]    # 役職一覧
+    FIRST_PERSON_LIST = ["私", "わたし", "僕", "ぼく"]  # 一人称一覧
     HUMAN_ROLE_LIST = ["村人", "占い師", "霊媒師", "狩人", "双子"]
     ENEMY_ROLE_LIST = ["狂人", "人狼", "妖狐"]
     
@@ -59,20 +59,44 @@ class MeaningExtraction:
         if(len(biteTarget) == 0):
             biteTarget.append(alive[random.randint(0, len(alive)-1)])
         return biteTarget[random.randint(0, len(biteTarget)-1)]
+      
+    def checkQuestionToMe(self, afterSyntacsAnalysis, myNameList):
+        sentence = u""
+        for nowAnal in afterSyntacsAnalysis:
+            sentence += nowAnal.clause
 
-#テスト
+        # はてな記号が入っているかチェック
+        hatenaFlag = False
+        if sentence.find("?") != -1:
+            hatenaFlag = True
+        if sentence.find("？") != -1:
+            hatenaFlag = True
+        if hatenaFlag == False:
+            return -1
 
-# testSentence = "私は人狼です"
-# res = SyntacticAnalysis.SyntacsAnalysis(testSentence).syntacsAnalysis()
+        # 自分の名前が含まれる
+        for indexMyName in range(len(myNameList)):
+            if sentence.find(myNameList[indexMyName]) != -1:
+                # 役職名が含まれる
+                for roleIndex in range(len(self.ROLE_LIST)):
+                    if sentence.find(self.ROLE_LIST[roleIndex]) != -1:
+                        return roleIndex
+        return -1
 
-# alivePeople = [1, 1, 0, 1, 1, 1, 1, 1]
-# nowRoleList = ["村人", "占い師", "霊媒師", "狩人", "双子", "人狼", "妖狐", "狂人"]
+    # 占い先を決定
+    # fortunedList 0:占ってない, 1:占った
+    def decisionFortune(self, fortunedList, deathList):
+        randomList = []
+        for i in range(len(fortunedList)):
+            if fortunedList[i] == 0 and deathList[i] == 0:
+                randomList.append(i)
+        return random.choice(randomList)
 
-# print(len(nowRoleList))
-
-# test = MeaningExtraction()
-# print(test.checkCo(res))
-# print(test.decideMediumTo(5))
-# print(test.decideProtectTo(alivePeople, 1))
-# print(nowRoleList[test.decideKillTo(nowRoleList, alivePeople)])
-# print(nowRoleList[test.decideBiteTo(nowRoleList, alivePeople)])
+    # COしてない人を促す
+    # coList 0:してない 1:してる
+    def promptCo(self, coList, deathList):
+        noCoList = []
+        for i in range(len(coList)):
+            if coList[i] == 0 and deathList[i] == 0:
+                noCoList.append(i)
+        return noCoList
