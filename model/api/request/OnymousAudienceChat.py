@@ -2,14 +2,13 @@
 import json
 
 class OnymousAudienceChat:
-	avatar_name = None
+	json_data = None
 
 	def __init__(self):
-		self.avatar_name = "villager1"
+		f = open('model/api/request/jsonld/onymousAudienceChat.jsonld', encoding="utf_8")
+		self.json_data = json.load(f)
+		self.json_data["avatar"]["name"] = "villager1"
 
 	def get(self, text):
-		f = open('model/api/request/jsonld/onymousAudienceChat.jsonld', encoding="utf_8")
-		json_data = json.load(f)
-		json_data["text"]["@value"] = text
-		json_data["avatar"]["name"] = self.avatar_name
-		return str(json_data)
+		self.json_data["text"]["@value"] = text
+		return str(self.json_data)
