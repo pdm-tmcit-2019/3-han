@@ -5,12 +5,10 @@
 import os
 import rx
 import json
-import string
 from rx import operators as ops
 from rx.subject import Subject
 from rx.scheduler import NewThreadScheduler
 import websocket
-import threading
 
 URL = "ws://localhost:8000"
 
