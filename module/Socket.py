@@ -1,5 +1,6 @@
 # coding: utf-8
 # あと残り、jsonからデータをうまいこと引っ張ってサブスクライブするだけ
+# 今欲しいデータは[avatar][name], [text][@value]
 
 import os
 import rx
@@ -14,7 +15,7 @@ import threading
 URL = "ws://localhost:8000"
 
 class Socket:
-	def __init__(self):
+	def execute_this_method(self):
 		self.stream = Subject()
 		url = URL
 
@@ -23,28 +24,20 @@ class Socket:
 			on_message = self.on_message,
 			on_error = self.on_error,
 		)
-		react = self.stream.pipe(
-			ops.observe_on(NewThreadScheduler()),
-			ops.map(lambda x: x["day"]),
-			#ops.map(lambda obj: obj["character"]["name"]),
-			#ops.map(lambda x: x["role"]["name"]),
-			#ops.map(lambda x: x["text"]),
-		)
+		ws.run_forever()
 
-		react.subscribe(print)
-
-		try :
-			ws.run_forever()
-		except KeyboardInterrupt:
-			self.stream.dispose()
-			ws.on_close()
+		react = self.stream.pipe(NewThreadScheduler())
+		return react.subscribe()
 
 	def on_message(self, message):
-		obj = json.loads(message)
-		self.stream.on_next(obj)
+		data = []
+		json_data = json.loads(message)
+		if json_data["phase"] != "flavor text":
+			if json_data["phase"] == "morning":
+				data = json_data["text"]["@value"]
+			elif json_data["phase"] == "result":
+				data = json_data["avatar"]["name"]
+		self.stream.on_next(data)
 
 	def on_error(self, error):
 		print(error)
-
-if __name__ == '__main__':
-	ws_exection = Socket()
