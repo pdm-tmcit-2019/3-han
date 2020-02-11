@@ -2,18 +2,17 @@
 import json
 
 class OnymousAudienceBoard:
-	avatar_name = None
-	character_name = None
-	role_name = None
+	json_data = None
 
 	def __init__(self):
-		self.avatar_name = "villager1"
+		f = open('model/api/request/jsonld/onymousAudienceBoard.jsonld', encoding="utf_8")
+		self.json_data = json.load(f)
+		self.json_data["avatar"]["name"] = "villager1"
 
 	def get(self, prediction, character_name, role_name):
-		f = open('model/api/request/jsonld/onymousAudienceBoard.jsonld', encoding="utf_8")
-		json_data = json.load(f)
-		json_data["prediction"] = prediction
-		json_data["avatar"]["name"] = self.avatar_name
-		json_data["character"]["name"]["en"] = character_name
-		json_data["role"]["name"]["en"] = role_name
-		return str(json_data)
+		self.json_data["prediction"] = prediction
+		self.json_data["character"]["name"]["en"] = character_name
+		self.json_data["character"]["name"]["ja"] = character_name
+		self.json_data["role"]["name"]["en"] = role_name
+		self.json_data["role"]["name"]["ja"] = role_name
+		return str(self.json_data)
